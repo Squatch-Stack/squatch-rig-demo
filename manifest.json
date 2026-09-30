@@ -13,8 +13,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 671,
-      "sha256": "e50c06215387269db0025e8aed037f45c73b3398547d2316c6f3f2d25effdb7c"
+      "bytes": 862,
+      "sha256": "3f30bbfd811b808f9f3550acada9ca6efe6fa97d85a0ce01525a2fcb92e34d99"
     },
     {
       "file": "audio/di-loop.wav",
@@ -170,6 +170,21 @@
       "file": "design/skin.brush-ink.json",
       "bytes": 1710,
       "sha256": "9f4a7b7b2178435d363d2e1d3aa4398e42adb7cfb7492c14bfa9ccfe8e9fcc02"
+    },
+    {
+      "file": "docs/screens/rig-dark.png",
+      "bytes": 839375,
+      "sha256": "1476130de0fcb6e2ed28a7372e4510ce54095a23b29ba36b4e126a7e74fa5bbe"
+    },
+    {
+      "file": "docs/screens/rig-light.png",
+      "bytes": 1011096,
+      "sha256": "ff7fad1b7980c7491789371598a51950b1ca8418220e905e6ffb7cfa6045722d"
+    },
+    {
+      "file": "docs/screens/rig-phone.png",
+      "bytes": 158607,
+      "sha256": "c317f1757e5e52cdead01468480f350c727575526a4b9e8dd93a81c78fa34d2a"
     },
     {
       "file": "fonts/OFL.txt",
