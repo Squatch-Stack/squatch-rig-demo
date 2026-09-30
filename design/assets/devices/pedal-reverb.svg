@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 250" width="150" height="250">
+<title>pedal reverb</title>
+<style>
+.c{fill:none;stroke:var(--ink,#1C160E);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.d{fill:none;stroke:var(--ink,#1C160E);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+.h{fill:none;stroke:var(--ink-soft,#6B5B3E);stroke-width:.75;stroke-linecap:round}
+.p{fill:var(--paper,#F7F5F0)}
+.p2{fill:var(--paper-2,#E8E0D4)}
+.k{fill:var(--ink,#1C160E)}
+.a{fill:var(--accent,#9C7208)}
+.slot{fill:none;stroke:none}
+</style>
+<defs><mask id="m-reverb" maskUnits="userSpaceOnUse"><rect x="-2000" y="-2000" width="6000" height="6000" fill="#fff"/><g fill="none" stroke="#000" stroke-linecap="round"><path d="M68.3 165.5C65.6 163.7 55.7 159.2 52.2 154.3C48.7 149.4 46.8 141.8 47.2 136.1C47.6 130.3 52.8 123.4 54.5 120C56.2 116.6 56.8 116.5 57.2 115.8" stroke-width="0.7"/><path d="M68.8 163.6C66.2 161.9 56.8 158 53.3 153.4C49.9 148.8 47.8 141.6 48 136.1C48.2 130.5 53 123.4 54.5 120C56 116.6 56.6 116.4 57 115.7" stroke-width="0.5"/><path d="M78 163.3C75.1 162.6 65.3 162.2 60.5 159.1C55.8 156.1 51.3 150.4 49.7 145.1C48.1 139.8 49.5 132.1 50.6 127.2C51.8 122.3 55.8 117.6 56.8 115.7C57.9 113.8 56.8 115.7 56.8 115.7" stroke-width="0.2"/><path d="M69.2 161.5C66.8 160 58 156.5 54.7 152.3C51.3 148.1 49 141.5 49 136.1C48.9 130.7 53.2 123.4 54.5 120C55.8 116.6 56.3 116.4 56.7 115.6" stroke-width="0.4"/><path d="M55.5 151.6C54.5 149 49.7 141.4 49.6 136.1C49.4 130.9 53.4 123.4 54.5 120C55.7 116.6 56.1 116.3 56.4 115.6" stroke-width="0.3"/><path d="M56.2 151C55.2 148.6 50.4 141.3 50.1 136.1C49.8 131 53.5 123.4 54.5 120C55.5 116.6 56 116.3 56.3 115.5" stroke-width="0.5"/><path d="M95 145.7C93.3 147.5 88.9 154.2 84.7 156.1C80.6 158.1 74.8 158.5 70.1 157.5C65.5 156.6 60.3 154 57 150.4C53.8 146.8 51.1 141.2 50.6 136.1C50.2 131.1 53.6 123.4 54.5 120C55.4 116.5 55.8 116.2 56.1 115.4" stroke-width="0.8"/></g></mask></defs>
+<g id="reverb">
+<rect class="p c" x="15" y="8" width="120" height="234" rx="11"/>
+<rect class="d" x="20" y="13" width="110" height="224" rx="7"/>
+<rect class="p d" x="8" y="56" width="7" height="16" rx="1.5"/><path class="h" d="M11.5 56v16"/><circle class="slot" data-slot="jack-in" cx="4" cy="64" r="6"/>
+<rect class="p d" x="135" y="56" width="7" height="16" rx="1.5"/><path class="h" d="M138.5 56v16"/><circle class="slot" data-slot="jack-out" cx="146" cy="64" r="6"/>
+<g class="knob" data-i="0" data-param="decay"><circle class="p c" cx="47.4" cy="40" r="13"/><circle class="d" cx="47.4" cy="40" r="8.8"/><path class="c" d="M49 38.1L53.9 32.2"/><path class="h" d="M35.6 51.8L34.1 53.3M32 33.6L30 32.8M47.4 23.4L47.4 21.2M62.8 33.6L64.8 32.8M59.2 51.8L60.7 53.3"/><circle class="slot" data-slot="knob" data-i="0" cx="47.4" cy="40" r="19.5"/></g>
+<g class="knob" data-i="1" data-param="tone"><circle class="p c" cx="102.6" cy="40" r="13"/><circle class="d" cx="102.6" cy="40" r="8.8"/><path class="c" d="M101.7 37.6L99.1 30.5"/><path class="h" d="M90.8 51.8L89.3 53.3M87.2 33.6L85.2 32.8M102.6 23.4L102.6 21.2M118 33.6L120 32.8M114.4 51.8L115.9 53.3"/><circle class="slot" data-slot="knob" data-i="1" cx="102.6" cy="40" r="19.5"/></g>
+<g class="knob" data-i="2" data-param="mix"><circle class="p c" cx="75" cy="74" r="13"/><circle class="d" cx="75" cy="74" r="8.8"/><path class="c" d="M73.1 72.4L67.2 67.5"/><path class="h" d="M63.2 85.8L61.7 87.3M59.6 67.6L57.6 66.8M75 57.4L75 55.2M90.4 67.6L92.4 66.8M86.8 85.8L88.3 87.3"/><circle class="slot" data-slot="knob" data-i="2" cx="75" cy="74" r="19.5"/></g>
+<circle class="p d led" cx="75" cy="184" r="3.2"/><circle class="slot" data-slot="led" cx="75" cy="184" r="3.2"/>
+<polygon class="d" points="87.6,221.2 75,228.5 62.4,221.2 62.4,206.8 75,199.5 87.6,206.8"/><circle class="p c" cx="75" cy="214" r="10"/><circle class="h" cx="75" cy="214" r="6"/><circle class="slot" data-slot="footswitch" cx="75" cy="214" r="16"/>
+<g class="glyph" id="reverb-glyph"><circle class="h" cx="75" cy="136" r="35" stroke-dasharray="1 4"/><circle class="h" cx="75" cy="136" r="42" stroke-dasharray="1 7" opacity=".6"/><path class="k" mask="url(#m-reverb)" d="M83.9 111.6C84.6 112.8 86.9 116.5 88.4 118.7C90 120.9 92.1 122.7 93.3 124.8C94.5 127 94.9 129.3 95.4 131.6C95.8 133.9 96.4 136.2 96.1 138.5C95.9 140.7 94.9 143.2 93.8 145.2C92.7 147.2 91 148.9 89.4 150.6C87.8 152.2 86.2 154 84.2 155C82.2 156 79.5 156.4 77.2 156.6C74.9 156.8 72.7 156.6 70.4 156.2C68.2 155.8 65.7 155.2 63.6 154.2C61.5 153.1 59.5 151.5 57.8 149.8C56.2 148 54.7 146 53.6 143.7C52.5 141.4 51.4 138.8 51.2 136.2C51 133.5 51.6 130.4 52.2 127.7C52.7 125 54.1 121.3 54.5 120L54.5 120C53.7 121.1 51.1 124.2 49.8 126.9C48.5 129.5 47.2 132.9 46.8 136.1C46.5 139.2 46.7 142.8 47.5 145.9C48.3 149 49.8 152 51.7 154.7C53.6 157.4 56.1 160 58.8 161.9C61.5 163.9 64.9 165.6 68.1 166.4C71.4 167.3 75 167.4 78.4 167C81.8 166.6 85.3 165.2 88.4 163.8C91.5 162.3 94.7 160.6 97.1 158.3C99.5 155.9 101.6 152.7 102.9 149.6C104.3 146.5 105 143 105.4 139.6C105.8 136.2 106.2 132.7 105.4 129.4C104.7 126.1 102.9 122.6 100.9 119.8C98.8 117.1 95.9 114.4 93.1 113C90.2 111.7 85.4 111.8 83.9 111.6A0.3 0.3 0 0 1 83.9 111.6Z"/></g>
+<rect class="slot" data-slot="glyph" x="38" y="106" width="74" height="58"/>
+</g>
+</svg>

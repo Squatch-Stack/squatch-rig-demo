@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>squatch-rig</title>
+  <meta name="description" content="Browser guitar rig: NAM amp heads and effects in AudioWorklets, wired as a node graph.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='3' width='20' height='26' rx='4' fill='%23F7F5F0' stroke='%231C160E' stroke-width='2'/%3E%3Cpath d='M10 20c3 0 4-8 6-8s3 8 6 8' fill='none' stroke='%231C160E' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='24.5' r='1.8' fill='%239C7208'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/transport.css">
+  <script type="importmap">{ "imports": { "pixi.js": "./vendor/pixi.mjs" } }</script>
+    <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="bar" role="toolbar" aria-label="Rig controls">
+    <a class="home-link" href="https://squatch.cc/" aria-label="Squatch Stack"><span aria-hidden="true">←</span><span class="home-label"> Squatch Stack</span></a>
+    <a class="brand" href="./" title="squatch rig"><span class="mark" aria-hidden="true"></span><span class="wordmark">squatch<i>rig</i></span></a>
+    <div class="bar-group bar-preset">
+      <input id="preset-name" aria-label="Preset name" spellcheck="false">
+      <button id="save" title="Download the pipeline JSON">Save</button>
+      <button id="load" title="Open a pipeline JSON">Open</button>
+      <button id="demo" title="Reset to the demo rig">Demo</button>
+    </div>
+    <div class="bar-group bar-io">
+      <label class="field inline"><span>Source</span>
+        <select id="source" aria-label="Input source"><option value="0">DI loop</option><option value="1">Interface</option></select></label>
+      <label class="field inline"><span>In</span><select id="in-dev" aria-label="Input device"></select></label>
+      <label class="field inline"><span>Out</span><select id="out-dev" aria-label="Output device"></select></label>
+    </div>
+    <div class="bar-group bar-edit">
+      <button id="add" aria-haspopup="menu">+ Device</button>
+      <button id="undo" class="icon" title="Undo (⌘Z)" aria-label="Undo">↶</button>
+      <button id="redo" class="icon" title="Redo (⇧⌘Z)" aria-label="Redo">↷</button>
+      <button id="fit" title="Fit to view (F)">Fit</button>
+    </div>
+    <div class="bar-group bar-view">
+      <a class="support-link" href="https://github.com/sponsors/Squatch-Stack" target="_blank" rel="noopener">Support</a>
+      <button id="motion" class="icon" title="Motion: follow system" aria-label="Motion: follow system">〰</button>
+      <button id="theme" class="icon" title="Toggle light/dark" aria-label="Toggle theme">◐</button>
+      <button id="more" class="bar-more icon" aria-expanded="false" aria-controls="bar-row2" aria-label="More controls">⋯</button>
+    </div>
+    <div class="bar-group bar-pick">
+      <label class="field inline"><span>Sound</span>
+        <select id="sound-pick" aria-label="Quick sound" title="Load a wired sound you can play immediately"><option value="">Custom rig</option></select></label>
+      <label class="field inline"><span>Theme</span>
+        <select id="theme-pick" aria-label="Theme" title="The paper the whole rig is drawn on"><option value="dark">Dark</option><option value="light">Light</option></select></label>
+      <label class="field inline"><span>Skin</span>
+        <select id="skin-pick" aria-label="Device skin" title="Device art: brush-ink line work, or the older built-in ink"><option value="brush-ink">brush-ink</option><option value="ink">ink</option></select></label>
+      <label class="field inline"><span>Pedal</span>
+        <select id="pedal-pick" aria-label="Add a pedal" title="Drop a pedal into the chain"><option value="">Add a pedal…</option></select></label>
+    </div>
+    <div class="bar-row2" id="bar-row2">
+      <div id="transport" role="group" aria-label="Transport"></div>
+    </div>
+  </header>
+  <main class="main">
+    <div id="stage" class="stage"><div id="chain-strip" class="chain-strip"><span aria-hidden="true">In</span><input type="range" min="0" max="1000" value="0" aria-label="Scroll along the chain"><span aria-hidden="true">Out</span></div></div>
+    <aside id="inspector" class="inspector" aria-label="Inspector"></aside>
+  </main>
+  <footer class="status" aria-live="off">
+    <span title="Sum of AudioWorklet render time per 128-frame quantum">DSP <b id="dsp">–</b></span>
+    <span title="AudioContext.renderCapacity, where the browser provides it">Render load <b id="cap">–</b></span>
+    <span>Round trip ≈ <b id="lat">–</b></span>
+    <span><b id="sr">–</b></span>
+    <span class="meter" aria-hidden="true"><span id="meter-fill"></span><span id="meter-peak"></span></span>
+    <span id="meter-db" class="mono">–</span>
+    <span class="grow"></span>
+    <span class="credit" id="credit">NAM Core © Steven Atkinson, MIT.</span>
+    <span id="renderer" class="mono"></span>
+  </footer>
+  <div id="add-menu" class="menu" role="menu" hidden></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" width="520" height="340">
+<title>cab 2x12</title>
+<style>
+.c{fill:none;stroke:var(--ink,#1C160E);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.d{fill:none;stroke:var(--ink,#1C160E);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+.h{fill:none;stroke:var(--ink-soft,#6B5B3E);stroke-width:.75;stroke-linecap:round}
+.p{fill:var(--paper,#F7F5F0)}
+.p2{fill:var(--paper-2,#E8E0D4)}
+.k{fill:var(--ink,#1C160E)}
+.a{fill:var(--accent,#9C7208)}
+.slot{fill:none;stroke:none}
+</style>
+
+<g id="cab-2x12">
+<rect class="p c" x="12" y="12" width="496" height="316" rx="12"/>
+<rect class="d" x="28" y="28" width="464" height="284" rx="6"/>
+<circle class="c" cx="140" cy="170" r="104"/><circle class="d" cx="140" cy="170" r="92"/><circle class="h" cx="140" cy="170" r="64"/><circle class="p d" cx="140" cy="170" r="30"/>
+<path class="h" d="M170.9 178.3L226.9 193.3M156 197.7L185 247.9M131.7 200.9L116.7 256.9M112.3 186L62.1 215M109.1 161.7L53.1 146.7M124 142.3L95 92.1M148.3 139.1L163.3 83.1M167.7 154L217.9 125" opacity=".7"/>
+<circle class="slot" data-slot="cone" cx="140" cy="170" r="92"/>
+<circle class="c" cx="380" cy="170" r="104"/><circle class="d" cx="380" cy="170" r="92"/><circle class="h" cx="380" cy="170" r="64"/><circle class="p d" cx="380" cy="170" r="30"/>
+<path class="h" d="M410.9 178.3L466.9 193.3M396 197.7L425 247.9M371.7 200.9L356.7 256.9M352.3 186L302.1 215M349.1 161.7L293.1 146.7M364 142.3L335 92.1M388.3 139.1L403.3 83.1M407.7 154L457.9 125" opacity=".7"/>
+<circle class="slot" data-slot="cone" cx="380" cy="170" r="92"/>
+<circle class="slot" data-slot="jack-in" cx="8" cy="170" r="8"/>
+<circle class="slot" data-slot="jack-out" cx="512" cy="170" r="8"/>
+</g>
+</svg>

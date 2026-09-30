@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 250" width="150" height="250">
+<title>pedal envfilter</title>
+<style>
+.c{fill:none;stroke:var(--ink,#1C160E);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.d{fill:none;stroke:var(--ink,#1C160E);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+.h{fill:none;stroke:var(--ink-soft,#6B5B3E);stroke-width:.75;stroke-linecap:round}
+.p{fill:var(--paper,#F7F5F0)}
+.p2{fill:var(--paper-2,#E8E0D4)}
+.k{fill:var(--ink,#1C160E)}
+.a{fill:var(--accent,#9C7208)}
+.slot{fill:none;stroke:none}
+</style>
+<defs><mask id="m-envfilter" maskUnits="userSpaceOnUse"><rect x="-2000" y="-2000" width="6000" height="6000" fill="#fff"/><g fill="none" stroke="#000" stroke-linecap="round"><path d="M77.6 117.6C79.7 120.5 86.7 130.6 90.1 135.2C93.5 139.7 95.2 142.6 98.1 145C101 147.3 104.7 148 107.5 149.2C110.3 150.3 113.5 151.2 114.7 151.7C115.9 152.1 114.7 151.7 114.7 151.7" stroke-width="0.6"/><path d="M89.3 135.6C90.7 137.3 94.8 143.2 97.8 145.5C100.9 147.8 104.6 148.4 107.5 149.4C110.3 150.4 113.5 151.2 114.7 151.5C115.9 151.9 114.7 151.5 114.7 151.5" stroke-width="0.2"/><path d="M97.4 146.4C99.1 146.9 104.5 148.9 107.4 149.7C110.3 150.6 113.5 151.1 114.8 151.3C116 151.6 114.8 151.3 114.8 151.3" stroke-width="0.2"/><path d="M97.3 146.7C98.9 147.3 104.4 149.1 107.4 149.9C110.3 150.6 113.5 151 114.8 151.2C116 151.5 114.8 151.2 114.8 151.2" stroke-width="0.4"/><path d="M91.8 144.7C93.5 145.4 98.6 148.1 102 149.1C105.4 150.1 109.9 150.4 112 150.7C114.1 151 114.4 151 114.8 151.1" stroke-width="0.4"/><path d="M91 145.4C92.8 146.1 98.3 148.8 101.8 149.7C105.3 150.6 109.8 150.5 112 150.7C114.2 150.9 114.4 150.9 114.9 150.9" stroke-width="0.2"/><path d="M90.5 145.9C92.4 146.6 98.1 149.3 101.7 150.1C105.3 150.9 109.8 150.6 112 150.7C114.2 150.8 114.4 150.8 114.9 150.8" stroke-width="0.7"/></g></mask></defs>
+<g id="envfilter">
+<rect class="p c" x="15" y="8" width="120" height="234" rx="11"/>
+<rect class="d" x="20" y="13" width="110" height="224" rx="7"/>
+<rect class="p d" x="8" y="56" width="7" height="16" rx="1.5"/><path class="h" d="M11.5 56v16"/><circle class="slot" data-slot="jack-in" cx="4" cy="64" r="6"/>
+<rect class="p d" x="135" y="56" width="7" height="16" rx="1.5"/><path class="h" d="M138.5 56v16"/><circle class="slot" data-slot="jack-out" cx="146" cy="64" r="6"/>
+<g class="knob" data-i="0" data-param="sens"><circle class="p c" cx="51" cy="42" r="11"/><circle class="d" cx="51" cy="42" r="7.5"/><path class="c" d="M52.1 40.1L55.3 34.6"/><path class="h" d="M41 52L39.7 53.3M38 36.6L36.3 35.9M51 27.9L51 26.1M64 36.6L65.7 35.9M61 52L62.3 53.3"/><circle class="slot" data-slot="knob" data-i="0" cx="51" cy="42" r="16.5"/></g>
+<g class="knob" data-i="1" data-param="range"><circle class="p c" cx="99" cy="42" r="11"/><circle class="d" cx="99" cy="42" r="7.5"/><path class="c" d="M97.1 40.9L91.6 37.7"/><path class="h" d="M89 52L87.7 53.3M86 36.6L84.3 35.9M99 27.9L99 26.1M112 36.6L113.7 35.9M109 52L110.3 53.3"/><circle class="slot" data-slot="knob" data-i="1" cx="99" cy="42" r="16.5"/></g>
+<g class="knob" data-i="2" data-param="q"><circle class="p c" cx="51" cy="86" r="11"/><circle class="d" cx="51" cy="86" r="7.5"/><path class="c" d="M53.1 86L59.6 86"/><path class="h" d="M41 96L39.7 97.3M38 80.6L36.3 79.9M51 71.9L51 70M64 80.6L65.7 79.9M61 96L62.3 97.3"/><circle class="slot" data-slot="knob" data-i="2" cx="51" cy="86" r="16.5"/></g>
+<g class="knob" data-i="3" data-param="mix"><circle class="p c" cx="99" cy="86" r="11"/><circle class="d" cx="99" cy="86" r="7.5"/><path class="c" d="M99 83.9L99 77.4"/><path class="h" d="M89 96L87.7 97.3M86 80.6L84.3 79.9M99 71.9L99 70M112 80.6L113.7 79.9M109 96L110.3 97.3"/><circle class="slot" data-slot="knob" data-i="3" cx="99" cy="86" r="16.5"/></g>
+<circle class="p d led" cx="75" cy="184" r="3.2"/><circle class="slot" data-slot="led" cx="75" cy="184" r="3.2"/>
+<polygon class="d" points="87.6,221.2 75,228.5 62.4,221.2 62.4,206.8 75,199.5 87.6,206.8"/><circle class="p c" cx="75" cy="214" r="10"/><circle class="h" cx="75" cy="214" r="6"/><circle class="slot" data-slot="footswitch" cx="75" cy="214" r="16"/>
+<g class="glyph" id="envfilter-glyph"><path class="h" d="M38 162H112"/><path class="k" mask="url(#m-envfilter)" d="M38 145.7C38.8 146.2 41.1 148 42.8 148.7C44.6 149.3 46.6 149.5 48.4 149.4C50.2 149.4 51.8 148.7 53.6 148.4C55.4 148 57.3 148 59.2 147.3C61.1 146.7 63.1 146 65.1 144.6C67.1 143.3 69.3 141.9 71.2 139.1C73.1 136.2 75.4 130.1 76.4 127.8C77.4 125.5 76.9 125.1 77.3 125.2C77.6 125.3 77.5 126 78.6 128.2C79.6 130.4 81.9 135.5 83.7 138.6C85.6 141.6 87.8 144.7 89.8 146.5C91.9 148.3 94.1 148.7 96.1 149.4C98 150.1 99.7 150.4 101.5 150.7C103.4 150.9 105.4 151 107.1 151C108.9 151 111.2 150.8 112 150.7L112 150.7C111.3 150.4 109.1 149.6 107.5 148.9C106 148.3 104.3 147.5 102.7 146.8C101.2 146 99.7 145.2 98.3 144.4C97 143.6 95.9 143.5 94.7 141.9C93.5 140.2 92.3 137.8 90.9 134.7C89.5 131.6 88.4 126.4 86.2 123.4C84 120.4 80.6 116.7 77.7 116.6C74.7 116.5 70.9 120 68.6 122.9C66.3 125.9 65.4 132.1 64 134.5C62.6 136.8 61.5 136.5 60.3 137.2C59 137.9 57.6 138.4 56.3 138.9C54.9 139.4 53.5 140 52 140.3C50.5 140.7 49 140.5 47.4 140.8C45.8 141.2 44.1 141.6 42.5 142.4C40.9 143.2 38.7 145.1 38 145.7A0.3 0.3 0 0 1 38 145.7Z"/></g>
+<rect class="slot" data-slot="glyph" x="38" y="106" width="74" height="58"/>
+</g>
+</svg>

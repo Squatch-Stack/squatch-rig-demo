@@ -1,0 +1,455 @@
+{
+  "format": "squatch-rig/public-demo",
+  "files": [
+    {
+      "file": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "LICENSE",
+      "bytes": 1070,
+      "sha256": "d2918130f1ac9048e1c5b9ab4a9f2718706537081f2affc3e68104a69ee873c4"
+    },
+    {
+      "file": "README.md",
+      "bytes": 671,
+      "sha256": "e50c06215387269db0025e8aed037f45c73b3398547d2316c6f3f2d25effdb7c"
+    },
+    {
+      "file": "audio/di-loop.wav",
+      "bytes": 2304044,
+      "sha256": "e38814f61c02d3051bc3b1784c944c22f8ca4fb3268e583b4fd5c9164faa060a"
+    },
+    {
+      "file": "audio/loops/chord-stabs.wav",
+      "bytes": 1417890,
+      "sha256": "bcd993a9e216ad010f845ced9924534b5ff2804ee8ec265d38eec5a7aa125e33"
+    },
+    {
+      "file": "audio/loops/clean-chords.wav",
+      "bytes": 1645758,
+      "sha256": "96484448c8129a9d7744c775a63a7e6a6f9911750ccbc0b9f1fdb513b032c33e"
+    },
+    {
+      "file": "audio/loops/index.json",
+      "bytes": 4153,
+      "sha256": "e57d12cbd2481fcc10eaa79a30b2dc97529087586035dcc2c26e54a676b02c71"
+    },
+    {
+      "file": "audio/loops/lead.wav",
+      "bytes": 2284844,
+      "sha256": "860be1e934a4feb76b5252e9f549653756c3d5caab0d9f119c8d0e3e0ba50e4a"
+    },
+    {
+      "file": "audio/loops/palm-mute-chug.wav",
+      "bytes": 1316616,
+      "sha256": "5f2b921996324d0c6eae2fe1c8446577c69a176c7e6ed35b5284ef34a127d0c0"
+    },
+    {
+      "file": "audio/loops/picked-riff.wav",
+      "bytes": 1772352,
+      "sha256": "d6f5dd53f7414c5c627be5f10457223b3e2dc96c4585cc12629ef384a4b74858"
+    },
+    {
+      "file": "audio/loops/single-note-riff.wav",
+      "bytes": 1403564,
+      "sha256": "6c60ce6e38732a06ae31bcb2ff19cbb0ce5ef564c86e9d26f4dae61981f60c3e"
+    },
+    {
+      "file": "css/app.css",
+      "bytes": 15519,
+      "sha256": "f70583d743fb235d458f423f8675a15f9f90d90d8a6f8829ea7d30d817fe8b98"
+    },
+    {
+      "file": "css/transport.css",
+      "bytes": 1772,
+      "sha256": "42d6855eb324a33598660471a4d622ca4e474e151590763f411bccaab0064752"
+    },
+    {
+      "file": "design/assets/brush/generated/A-stroke-settle.json",
+      "bytes": 14442,
+      "sha256": "71e544f9d28519fef3dcf76d3f1332448a4acab11a78472e21410e57a42ea0cd"
+    },
+    {
+      "file": "design/assets/brush/generated/B-enso-settle.json",
+      "bytes": 7842,
+      "sha256": "9ebfdef51dfcac14b2a7439a7df2ef1ecced6af69ff1ac583db78a56c9d1a384"
+    },
+    {
+      "file": "design/assets/devices/amp-head.svg",
+      "bytes": 7578,
+      "sha256": "ec034d8549c664354813f7a908ebf5e1a3e785a7f204ebd6230631b7435c8ab5"
+    },
+    {
+      "file": "design/assets/devices/cab-2x12.svg",
+      "bytes": 1767,
+      "sha256": "9e878d59add2e405f3b44f34843836da5914a2bb2fb49ade86de19db4a493c91"
+    },
+    {
+      "file": "design/assets/devices/io-input.svg",
+      "bytes": 3990,
+      "sha256": "625d1a7e24229a57beb5b613b91e75732b2ec8fc3eb7019848c907050bf9a132"
+    },
+    {
+      "file": "design/assets/devices/io-output.svg",
+      "bytes": 4009,
+      "sha256": "fd2c8b7b37756f8dab433d9daaef25cf0f73fdd985a757f794a3a41370860cd3"
+    },
+    {
+      "file": "design/assets/devices/mixer-2.svg",
+      "bytes": 5804,
+      "sha256": "daf3a3e06e18255a6558e3b3679ff2fb2fcb98cfbcf44f0cd53af977d0c85d0a"
+    },
+    {
+      "file": "design/assets/devices/mixer-3.svg",
+      "bytes": 8014,
+      "sha256": "d9904a54061b0d90ed9ee338cc9d0708286b9d65f76c4b4d3a0d4d788fc87752"
+    },
+    {
+      "file": "design/assets/devices/mixer-4.svg",
+      "bytes": 10548,
+      "sha256": "3f5c97b597bcb630fc4d44b10489e0adc8322fcf42fed00483074d2e1fdb8bd4"
+    },
+    {
+      "file": "design/assets/devices/pedal-bloom.svg",
+      "bytes": 16397,
+      "sha256": "8039cb07267f13453ad38ee0c85cd714b9346ee2906401436aee2d25c03325cc"
+    },
+    {
+      "file": "design/assets/devices/pedal-compressor.svg",
+      "bytes": 5197,
+      "sha256": "af6d34d088bd68e7f0988faecd5f99072b5cc8b98dd9b3db725671a444c79ec5"
+    },
+    {
+      "file": "design/assets/devices/pedal-envfilter.svg",
+      "bytes": 5367,
+      "sha256": "9539bf1e357891e829fe7683272e1fa5aa09ae55fa79cc686dfac47b46279845"
+    },
+    {
+      "file": "design/assets/devices/pedal-gate.svg",
+      "bytes": 4635,
+      "sha256": "8e567c8b2475c5e50611006262f87f4d468eeb30f9ea3f8a76e135240a3fbbc3"
+    },
+    {
+      "file": "design/assets/devices/pedal-limiter.svg",
+      "bytes": 4755,
+      "sha256": "52ec73a19e0e6cd09d75fb56a57a07a98568927182048d3f136f58cd23d66eda"
+    },
+    {
+      "file": "design/assets/devices/pedal-overdrive.svg",
+      "bytes": 5011,
+      "sha256": "c6458774c261d65307be33d4c4a3bd10f33334c57a5fa1b45c24c708b5bf66c8"
+    },
+    {
+      "file": "design/assets/devices/pedal-reverb.svg",
+      "bytes": 5261,
+      "sha256": "0a7ded4c739b822bc3a164329ddda5d404646e1285fe0acf5134394d71bd545d"
+    },
+    {
+      "file": "design/assets/devices/splitter-2.svg",
+      "bytes": 5237,
+      "sha256": "d4a2376ebc4ef2188bc670e323331f228dbb0b9b39d31d36247f6b3b77dcadb7"
+    },
+    {
+      "file": "design/assets/devices/splitter-3.svg",
+      "bytes": 7426,
+      "sha256": "dc9a63cc5542ec0ea6832b62329b796a82ec7adace4212c681f1537df7342c2a"
+    },
+    {
+      "file": "design/assets/devices/splitter-4.svg",
+      "bytes": 9839,
+      "sha256": "435deb3db8cead6fc9127db2618a35be97832eefe4aaf224ac9ffa76079df972"
+    },
+    {
+      "file": "design/assets/devices/splitter.svg",
+      "bytes": 6677,
+      "sha256": "0c746d58811103cbca502b11d8d1390182ba6e6d801d02c33fd6679cb8e416a5"
+    },
+    {
+      "file": "design/skin.brush-ink.json",
+      "bytes": 1710,
+      "sha256": "9f4a7b7b2178435d363d2e1d3aa4398e42adb7cfb7492c14bfa9ccfe8e9fcc02"
+    },
+    {
+      "file": "fonts/OFL.txt",
+      "bytes": 4762,
+      "sha256": "31b7cdf2065ca8a5096d0019c7a44292fcc9650a08e12c8580d31d2f744983a3"
+    },
+    {
+      "file": "fonts/inter-latin-var.woff2",
+      "bytes": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "file": "fonts/lora-latin-italic-var.woff2",
+      "bytes": 23376,
+      "sha256": "dd02a01aa86a3d388db13495b13509af4af12551fc3aa978aceecc51b8e4c17b"
+    },
+    {
+      "file": "fonts/lora-latin-var.woff2",
+      "bytes": 37788,
+      "sha256": "ddb8c66035104e233fc024669183aad3738b6daa16deee2ebb1241bd0f98ace1"
+    },
+    {
+      "file": "img/squatch-mark.svg",
+      "bytes": 3387,
+      "sha256": "6d4039f9b4e823ac45a97cc4f56ded6689bb51fb998a0adeffb3e4493d75131e"
+    },
+    {
+      "file": "index.html",
+      "bytes": 5256,
+      "sha256": "703fc19f4bb8f600aa78d50535d1b5d3ff7f744e75a468e8d1e224a81d3c008c"
+    },
+    {
+      "file": "js/audio/engine.js",
+      "bytes": 19463,
+      "sha256": "e4f27c9658634e35a8709288d3153cfcbc89caaab06f682c8721628da6caa18f"
+    },
+    {
+      "file": "js/audio/ir.js",
+      "bytes": 3186,
+      "sha256": "72d7266e4922f516f70dc62cab862b98b4add048e2e3202682806bc59dc8a2cf"
+    },
+    {
+      "file": "js/audio/library.js",
+      "bytes": 3626,
+      "sha256": "12e5704792284193b4c0baf7c1b8f8f9cedcb1b33becf634bce70cb9c6861a75"
+    },
+    {
+      "file": "js/audio/meters.js",
+      "bytes": 6640,
+      "sha256": "68094844f8812548100751b02e6b0b4361a66293e0f9ec7940866e0379cbcfa7"
+    },
+    {
+      "file": "js/audio/modeldesc.js",
+      "bytes": 1270,
+      "sha256": "a5b21d0b49e640f67c846070fe78a36d44a7073a3086232670860156e0dca78a"
+    },
+    {
+      "file": "js/audio/nodes.js",
+      "bytes": 13270,
+      "sha256": "ef9f31974a18886a449139bcf8ca85e37d9f1cbb3f1d8e16c587a4ef2536a7d0"
+    },
+    {
+      "file": "js/audio/wav.js",
+      "bytes": 4573,
+      "sha256": "645197c7d5437c7b3dd2c54252747c84d726e609cf069a5e1b944c511a093204"
+    },
+    {
+      "file": "js/graph/bloom-contract.js",
+      "bytes": 592,
+      "sha256": "2737f9f48e1af4912d02da538f939cea42cd386ee56fa5b6de8644f33740a96e"
+    },
+    {
+      "file": "js/graph/demo-public.js",
+      "bytes": 1818,
+      "sha256": "38ff95466e1278270e3784364cf6588c67bba26e7c198cf3f6c6d7505ff1f5ff"
+    },
+    {
+      "file": "js/graph/doc.js",
+      "bytes": 6962,
+      "sha256": "d982acc9a9c112c62ae0431c37084f28ea10eadd5ba2a68b577a6afc97da22a6"
+    },
+    {
+      "file": "js/graph/quick-sounds.js",
+      "bytes": 2413,
+      "sha256": "fcd8a7751217b60ca9440ba581cc74e1e825df44c060d472b92c202560108a5c"
+    },
+    {
+      "file": "js/graph/trail-od-contract.js",
+      "bytes": 480,
+      "sha256": "06a126490499141c68a72ca8b76d3952bd863708c83ac1b6f43923516dc02a16"
+    },
+    {
+      "file": "js/graph/types.js",
+      "bytes": 5811,
+      "sha256": "289356c57b303a048999d82fd495ca76f177d3a5d170ab41cf27e8702b4acc95"
+    },
+    {
+      "file": "js/main.js",
+      "bytes": 14541,
+      "sha256": "97ffc2cba49e8f01764a639a9fbd3fbe498363d9ce8e3d85d585597495d1e815"
+    },
+    {
+      "file": "js/ui/brush.js",
+      "bytes": 6649,
+      "sha256": "5d250fd580a063aac08bc40ddb53200e7cea7686a231ee13f40d324f5708da1c"
+    },
+    {
+      "file": "js/ui/canvas.js",
+      "bytes": 36825,
+      "sha256": "36e110ffa833371ecbb04bd5b75ce2e2710bcc967ac66a8d222be27b07f8f69e"
+    },
+    {
+      "file": "js/ui/chrome.js",
+      "bytes": 7929,
+      "sha256": "213ff5c4fd29558cbd3ec7305cbeaeef786607c48c59db699daef9878c1b6331"
+    },
+    {
+      "file": "js/ui/glyphs.js",
+      "bytes": 16748,
+      "sha256": "c3d4886f866fafe4e48ca289d38d04900d8596f3167c35f2e924aad972871d2c"
+    },
+    {
+      "file": "js/ui/inspector.js",
+      "bytes": 9681,
+      "sha256": "2c621500d4e05d10d22d1d7e0e971cf100a9763d73778ea3400ce11adf237ae7"
+    },
+    {
+      "file": "js/ui/motion.js",
+      "bytes": 8426,
+      "sha256": "b775508d8f6d5c66674476b0896cba2fbdb752a98f2e56f84c3f901e2f4a00a3"
+    },
+    {
+      "file": "js/ui/paper.js",
+      "bytes": 3981,
+      "sha256": "dce434504941ee07182cc034601b646c648bc0f71a860a6906143ff5ea08ed5f"
+    },
+    {
+      "file": "js/ui/settle.js",
+      "bytes": 3348,
+      "sha256": "05410b8dc3aeb20621ac3f3a9d3b8d80cdc8b4b09b6bf215a793201104348ed6"
+    },
+    {
+      "file": "js/ui/skin-ink.js",
+      "bytes": 13749,
+      "sha256": "424fcaaba3130f0781710e641d981256e1cb151ea6da2e84d2d18bd0c9c14ca8"
+    },
+    {
+      "file": "js/ui/skins.js",
+      "bytes": 11181,
+      "sha256": "8da17574861182a33542e27a9425e73390a419a3937fd7bdfa9a7ee36a7e224f"
+    },
+    {
+      "file": "js/ui/theme.js",
+      "bytes": 3833,
+      "sha256": "b50c4efb0194df935371fae9dcac2d504f20bcb8d1637f86ed21c8bc39c2f135"
+    },
+    {
+      "file": "js/ui/transport.js",
+      "bytes": 8813,
+      "sha256": "421fca2c7c8d360a0ad41a520b97d2da511938d5da1d2aa74cb6f9cfe9f1d8a2"
+    },
+    {
+      "file": "models/LICENSE-NAM-Core-MIT.txt",
+      "bytes": 1072,
+      "sha256": "ba9624e2138bc70749ccf6742b14ec9fac26b2197ca8de85c4d0bd4eeafa0a21"
+    },
+    {
+      "file": "models/index.json",
+      "bytes": 999,
+      "sha256": "e9e514cf0ce10550987b796ff2f26becfebd480d22ba44072b653735979e1805"
+    },
+    {
+      "file": "models/namcore-example-A1.nam",
+      "bytes": 407452,
+      "sha256": "ceb53469a19ce278e2235da982ae676cb8d5451a8de22a7ecc7a2617d07224d1"
+    },
+    {
+      "file": "models/namcore-example-A2.nam",
+      "bytes": 665758,
+      "sha256": "2d2d744516dc0197737a2c5001010429692d4cb20d72b08264781de626fcf4ca"
+    },
+    {
+      "file": "vendor/LICENSE-pixi.js.txt",
+      "bytes": 1092,
+      "sha256": "5ce7447bc57f7349ffc48338782fbcabe613696e00712b20d66bc58e780f9473"
+    },
+    {
+      "file": "vendor/pixi.mjs",
+      "bytes": 828971,
+      "sha256": "2f69e90f5b1980e6ea244bacfb3fa1eb457e16ddcb0a602b694642658956f2ef"
+    },
+    {
+      "file": "wasm/nam.wasm",
+      "bytes": 814923,
+      "sha256": "4df2d4befa5a1ba55ecedce8d6d7acbb16dbc917010fc4cade8d713c5f613d93"
+    },
+    {
+      "file": "worklets/cpu.js",
+      "bytes": 1528,
+      "sha256": "f49f164cb575745cf5271f0cd21484d2e0dcb77d5e292a03d0d601609b31ac43"
+    },
+    {
+      "file": "worklets/dsp/bloom.js",
+      "bytes": 3085,
+      "sha256": "1242add762a05e83dc459f8ed5e65cdf50876d97d359c5a01602aded0d3444c2"
+    },
+    {
+      "file": "worklets/dsp/compressor.js",
+      "bytes": 2615,
+      "sha256": "e98f4c70f83874f5a1309e0414529bcf48ddda80219fc05ca6e8c9b4cfb1a072"
+    },
+    {
+      "file": "worklets/dsp/envfilter.js",
+      "bytes": 2809,
+      "sha256": "4b4c2d7e221bb04f2d1427479880753f6507b4c982c78339c38fe38acdcf80aa"
+    },
+    {
+      "file": "worklets/dsp/fxrun.js",
+      "bytes": 1847,
+      "sha256": "fb4e092d18de172df14656eaf5575da2c7ee1a0464257b7f5349d02f97b01f22"
+    },
+    {
+      "file": "worklets/dsp/gate.js",
+      "bytes": 2142,
+      "sha256": "439af9a3893f76739f197b31603e7bbb35aa41c7a9d66a6d2acf13782512cb47"
+    },
+    {
+      "file": "worklets/dsp/limiter.js",
+      "bytes": 2848,
+      "sha256": "ccf674533def35c968210e1639a6674f9dd4283a51c2acf64b35ec95bd12397d"
+    },
+    {
+      "file": "worklets/dsp/namhead.js",
+      "bytes": 2228,
+      "sha256": "818476b82380fb34594c3be1295428056961b41333a6b03ea3e4c40b38179402"
+    },
+    {
+      "file": "worklets/dsp/overdrive.js",
+      "bytes": 3098,
+      "sha256": "6938772c1f02b88bbd060a5d91d60009fe02b90c2957147a5118ef17c4955746"
+    },
+    {
+      "file": "worklets/dsp/oversample.js",
+      "bytes": 2088,
+      "sha256": "fa72feef98b654790da6314db3fba862a4edbb9cfc44430647a8f7b8c97c33eb"
+    },
+    {
+      "file": "worklets/dsp/reverb.js",
+      "bytes": 3718,
+      "sha256": "293ea588e935215620aa1e61dbeed555576b5e016e692fbec02027437d8ad024"
+    },
+    {
+      "file": "worklets/dsp/svf.js",
+      "bytes": 743,
+      "sha256": "420e5da5a2459fd55bf084857d9187549cf90825b41471577027eec5d397883f"
+    },
+    {
+      "file": "worklets/dsp/util.js",
+      "bytes": 4899,
+      "sha256": "59245267a0f0866bd921a6e3dbb26c0401c116d8a7c63c059bac4c5b550484b7"
+    },
+    {
+      "file": "worklets/fx-processor.js",
+      "bytes": 2826,
+      "sha256": "6213eaac238ae7fa39af01e57533a7102a35786bbdc7f0ed902d3f27d9a7aa47"
+    },
+    {
+      "file": "worklets/nam-processor.js",
+      "bytes": 2718,
+      "sha256": "fa686683b6e4603ae13f465f592d30614ee1524a6e6a6252dcb2c585c1fdcf7c"
+    },
+    {
+      "file": "worklets/nam-wasm.js",
+      "bytes": 4111,
+      "sha256": "563d7f780fa1cd29a4f58ab023355685b8e0798247f8bc31ace2daf5dcd13120"
+    },
+    {
+      "file": "worklets/tap-processor.js",
+      "bytes": 3230,
+      "sha256": "25837c2c0464f1ac787a0b8d30a9af14933d3b8d2517e91584c2e054e2c6ea90"
+    }
+  ]
+}
