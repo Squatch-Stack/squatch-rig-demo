@@ -50,7 +50,10 @@ export class Inspector {
     if (bypassable(node)) {
       row.append(h('button', { 'data-bypass': '', 'aria-pressed': String(!node.bypass), class: 'toggle', onclick: () => this.store.setBypass(this.id, !node.bypass) }, node.bypass ? 'Bypassed' : 'On'));
     }
-    row.append(h('button', { class: 'danger', onclick: () => this.store.removeNode(this.id) }, 'Remove'));
+    const lastEndpoint = (node.type === 'input' || node.type === 'output') &&
+      Object.values(this.store.doc.nodes).filter((n) => n.type === node.type).length === 1;
+    if (lastEndpoint) row.append(h('span', { class: 'insp-note' }, 'Required stage'));
+    else row.append(h('button', { class: 'danger', onclick: () => this.store.removeNode(this.id) }, 'Remove'));
     side.push(row);
 
     if (node.type === 'nam') side.push(this._modelPanel(node, eng));

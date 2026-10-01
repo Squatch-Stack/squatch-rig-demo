@@ -42,6 +42,11 @@ export function quickSoundDoc(models, sound = 'stack') {
     if (split) Object.assign(split.params, { level0: -60, level1: -60, level2: 0 });
     if (mix) Object.assign(mix.params, { pan2: 0, level2: 0, master: -3 });
     Object.assign(node('Hall').params, { decay: 4.2, mix: 0.42 });
+    if (!split) Object.assign(node('Gate').params, { threshold: -46, hold: 40, release: 90 });
   }
+  // The public one-head model has a different loudness curve from the private
+  // three-head capture mix. Trim complete public sounds after the amp so
+  // switching sounds does not jump several dB.
+  if (!split) node('Output').params.volume = { trail: -5, bloom: -4.5, hall: -4 }[sound] ?? 0;
   return doc;
 }

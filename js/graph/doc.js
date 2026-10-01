@@ -97,9 +97,34 @@ export class Store extends EventTarget {
     });
   }
   removeNode(id) {
+    const node = this.doc.nodes[id];
+    if (!node) return false;
+    if ((node.type === 'input' || node.type === 'output') &&
+        Object.values(this.doc.nodes).filter((n) => n.type === node.type).length === 1) {
+      this.dispatchEvent(new CustomEvent('blocked', { detail: `Keep one ${node.type === 'output' ? 'Output' : 'Input'} stage in the rig.` }));
+      return false;
+    }
     this.change('topology', (d) => {
       delete d.nodes[id];
       for (const [eid, e] of Object.entries(d.edges)) if (e.from[0] === id || e.to[0] === id) delete d.edges[eid];
+    });
+    return true;
+  }
+  /** Repair an older saved rig whose Output was deleted, keeping its other edits. */
+  restoreOutput() {
+    const existing = Object.entries(this.doc.nodes).find(([, n]) => n.type === 'output');
+    if (existing) return existing[0];
+    const fed = new Set(Object.values(this.doc.edges).map((e) => e.from[0]));
+    const ends = Object.entries(this.doc.nodes).filter(([id, n]) => outsOf(n) > 0 && !fed.has(id));
+    ends.sort((a, b) => b[1].pos[0] - a[1].pos[0]);
+    const last = ends[0];
+    return this.change('topology', (d) => {
+      const id = newId('output');
+      const node = { type: 'output', label: 'Output', pos: last ? [last[1].pos[0] + 180, last[1].pos[1]] : [0, 0], bypass: false };
+      node.params = { ...defaultParams(node), volume: 0 };
+      d.nodes[id] = node;
+      if (last) d.edges[newId('e')] = { from: [last[0], 0], to: [id, 0] };
+      return id;
     });
   }
   connect(from, to) {

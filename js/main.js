@@ -1,6 +1,7 @@
 // Boot: library -> document -> audio engine -> canvas -> chrome.
 import { Store, validateDoc, canonicalJSON } from './graph/doc.js';
 import { demoDoc } from './graph/demo-public.js';
+import { upgradePublicDemo } from './graph/demo-public.js';
 import { QUICK_SOUNDS, quickSoundDoc } from './graph/quick-sounds.js';
 import { TYPES } from './graph/types.js';
 import { Library } from './audio/library.js';
@@ -32,7 +33,7 @@ const skinName = (v) => String(v || '').replace(/[^\w-]/g, '') || 'brush-ink';
 async function main() {
   const library = await new Library().init();
   let doc = null;
-  if (!params.has('demo')) { try { doc = JSON.parse(safeStorage.get(AUTOSAVE) || 'null'); if (doc) validateDoc(doc); } catch { doc = null; } }
+  if (!params.has('demo')) { try { doc = JSON.parse(safeStorage.get(AUTOSAVE) || 'null'); if (doc) { validateDoc(doc); upgradePublicDemo(doc); } } catch { doc = null; } }
   const freshDemo = !doc;
   if (!doc) doc = demoDoc(library.models);
   const store = new Store(doc);
@@ -75,6 +76,7 @@ async function main() {
   });
   canvas.addEventListener('select', (e) => inspector.show(e.detail?.kind === 'node' ? e.detail.id : null));
   canvas.addEventListener('toast', (e) => toast(e.detail));
+  store.addEventListener('blocked', (e) => toast(e.detail));
   inspector.show(null);
   mountChrome({ canvas, inspector, params });
 
@@ -92,6 +94,14 @@ async function main() {
     clearTimeout(main.saveT);
     main.saveT = setTimeout(() => safeStorage.set(AUTOSAVE, JSON.stringify(store.doc)), 400);
     $('#preset-name').value = store.doc.name;
+    $('#restore-output').hidden = Object.values(store.doc.nodes).some((n) => n.type === 'output');
+  });
+  $('#restore-output').hidden = Object.values(store.doc.nodes).some((n) => n.type === 'output');
+  $('#restore-output').addEventListener('click', () => {
+    const id = store.restoreOutput();
+    canvas.select({ kind: 'node', id });
+    canvas.fit();
+    toast('Output restored and wired to the end of the rig.');
   });
   // ---- devices
   async function listDevices() {
