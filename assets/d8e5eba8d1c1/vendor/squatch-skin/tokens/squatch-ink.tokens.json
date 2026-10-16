@@ -1,0 +1,1082 @@
+{
+  "$description": "Squatch Ink: the reference theme. Pen for structure, brush for signal, one ink on warm paper, one gold hand, and seal red for the limit. Values reconciled from squatch.cc (tailwind.config.js, locked 2026-07-01), squatch-rig design/DIRECTION.md and web/css/app.css, squatch-docs site.css and squatch-tuner tuner.css; see INVENTORY.md.",
+  "$extensions": {
+    "cc.squatch.theme": {
+      "id": "squatch-ink",
+      "name": "Squatch Ink",
+      "version": "0.2.0",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "defaultMode": "light",
+      "status": "reference theme; seal red approved 2026-09-24 (DECISIONS.md D1)"
+    }
+  },
+  "primitive": {
+    "color": {
+      "$type": "color",
+      "paper": {
+        "50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9882,
+              0.9843,
+              0.9725
+            ],
+            "hex": "#FCFBF8"
+          },
+          "$description": "rig --paper-hi (light)"
+        },
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9686,
+              0.9608,
+              0.9412
+            ],
+            "hex": "#F7F5F0"
+          },
+          "$description": "squatch.cc spring-wood; rig and docs --paper"
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9333,
+              0.9137,
+              0.8745
+            ],
+            "hex": "#EEE9DF"
+          },
+          "$description": "rig --canvas (light)"
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9098,
+              0.8784,
+              0.8314
+            ],
+            "hex": "#E8E0D4"
+          },
+          "$description": "squatch.cc pearl-bush; --paper-2"
+        },
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8314,
+              0.7961,
+              0.7333
+            ],
+            "hex": "#D4CBBB"
+          },
+          "$description": "rig --rule (light)"
+        },
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7961,
+              0.749,
+              0.6627
+            ],
+            "hex": "#CBBFA9"
+          },
+          "$description": "rig --ink-faint (light); docs --line-strong"
+        }
+      },
+      "ink": {
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9294,
+              0.902,
+              0.8471
+            ],
+            "hex": "#EDE6D8"
+          },
+          "$description": "dark-mode ink"
+        },
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6588,
+              0.5961,
+              0.4706
+            ],
+            "hex": "#A89878"
+          },
+          "$description": "dark-mode ink-soft"
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4196,
+              0.3569,
+              0.2431
+            ],
+            "hex": "#6B5B3E"
+          },
+          "$description": "squatch.cc tobacco; --ink-soft"
+        },
+        "700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2275,
+              0.1961,
+              0.149
+            ],
+            "hex": "#3A3226"
+          },
+          "$description": "squatch.cc warm-brown (body text on the site); rig dark --rule"
+        },
+        "900": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1098,
+              0.0863,
+              0.0549
+            ],
+            "hex": "#1C160E"
+          },
+          "$description": "warm black; --ink"
+        }
+      },
+      "night": {
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2902,
+              0.251,
+              0.2039
+            ],
+            "hex": "#4A4034"
+          },
+          "$description": "rig --ink-faint (dark)"
+        },
+        "800": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1373,
+              0.1137,
+              0.0824
+            ],
+            "hex": "#231D15"
+          },
+          "$description": "--paper-2 (dark)"
+        },
+        "850": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1255,
+              0.102,
+              0.0706
+            ],
+            "hex": "#201A12"
+          },
+          "$description": "rig --paper-hi (dark)"
+        },
+        "900": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0902,
+              0.0745,
+              0.051
+            ],
+            "hex": "#17130D"
+          },
+          "$description": "--paper (dark). DIRECTION.md and the docs site; the rig CSS has #1A150F"
+        },
+        "950": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0627,
+              0.051,
+              0.0353
+            ],
+            "hex": "#100D09"
+          },
+          "$description": "rig --canvas (dark)"
+        }
+      },
+      "gold": {
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8314,
+              0.6627,
+              0.2471
+            ],
+            "hex": "#D4A93F"
+          },
+          "$description": "accent (dark)"
+        },
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7882,
+              0.6275,
+              0.2902
+            ],
+            "hex": "#C9A04A"
+          },
+          "$description": "Bloom leaf (light); within a hair of squatch.cc gold-start #C9A84C"
+        },
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7216,
+              0.5255,
+              0.0431
+            ],
+            "hex": "#B8860B"
+          },
+          "$description": "squatch.cc hot-toddy, the brand gold. 3.0:1 on paper, 2.5:1 on paper-2: large decorative fills only"
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6118,
+              0.4471,
+              0.0314
+            ],
+            "hex": "#9C7208"
+          },
+          "$description": "accent (light): the brand gold darkened to pass 3:1 on every surface"
+        }
+      },
+      "seal": {
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.851,
+              0.3333,
+              0.2392
+            ],
+            "hex": "#D9553D"
+          },
+          "$description": "seal red (dark). APPROVED 2026-09-24 (D1): means the limit only. Was #E0674F."
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6039,
+              0.1804,
+              0.1059
+            ],
+            "hex": "#9A2E1B"
+          },
+          "$description": "seal red (light). APPROVED 2026-09-24 (D1): means the limit only. Was #A8321E; darkened to separate it from the gold for red-green colour-blind viewers."
+        }
+      },
+      "bloom": {
+        "900": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1216,
+              0.2275,
+              0.1725
+            ],
+            "hex": "#1F3A2C"
+          },
+          "$description": "Bloom lacquer field (one device's own finish)"
+        }
+      },
+      "white": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1
+          ],
+          "hex": "#FFFFFF"
+        }
+      },
+      "black": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000"
+        },
+        "$description": "Pixels off; an unlit LED."
+      }
+    }
+  },
+  "semantic": {
+    "color": {
+      "$type": "color",
+      "surface": {
+        "canvas": {
+          "$type": "color",
+          "$value": "{primitive.color.paper.200}",
+          "$description": "Behind everything: the canvas the devices sit on.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.night.950}"
+            },
+            "cc.squatch.legacy": [
+              "--canvas",
+              "--bg"
+            ]
+          }
+        },
+        "page": {
+          "$type": "color",
+          "$value": "{primitive.color.paper.100}",
+          "$description": "Page and device fill.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.night.900}"
+            },
+            "cc.squatch.legacy": [
+              "--paper",
+              "--panel"
+            ]
+          }
+        },
+        "raised": {
+          "$type": "color",
+          "$value": "{primitive.color.paper.50}",
+          "$description": "Cards, knob caps, anything that sits proud.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.night.850}"
+            },
+            "cc.squatch.legacy": [
+              "--paper-hi"
+            ]
+          }
+        },
+        "sunken": {
+          "$type": "color",
+          "$value": "{primitive.color.paper.300}",
+          "$description": "Control panels, wells, the amp panel.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.night.800}"
+            },
+            "cc.squatch.legacy": [
+              "--paper-2",
+              "--panel-2"
+            ]
+          }
+        }
+      },
+      "text": {
+        "primary": {
+          "$type": "color",
+          "$value": "{primitive.color.ink.900}",
+          "$description": "Body text; the pen and the brush.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.ink.200}"
+            },
+            "cc.squatch.legacy": [
+              "--ink"
+            ]
+          }
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{primitive.color.ink.600}",
+          "$description": "Legends, labels, hatch, secondary text.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.ink.400}"
+            },
+            "cc.squatch.legacy": [
+              "--ink-soft",
+              "--ink-dim"
+            ]
+          }
+        },
+        "on-accent": {
+          "$type": "color",
+          "$value": "{primitive.color.white}",
+          "$description": "Text on an accent fill.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.night.900}"
+            },
+            "cc.squatch.legacy": [
+              "--accent-ink"
+            ]
+          }
+        }
+      },
+      "line": {
+        "rule": {
+          "$type": "color",
+          "$value": "{primitive.color.paper.400}",
+          "$description": "Hairlines and dividers.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.ink.700}"
+            },
+            "cc.squatch.legacy": [
+              "--rule",
+              "--line"
+            ]
+          }
+        },
+        "faint": {
+          "$type": "color",
+          "$value": "{primitive.color.paper.500}",
+          "$description": "Tracks, ticks, disabled outlines.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.night.600}"
+            },
+            "cc.squatch.legacy": [
+              "--ink-faint"
+            ]
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{primitive.color.gold.600}",
+        "$description": "Your hand: selection, the value being adjusted, focus.",
+        "$extensions": {
+          "cc.squatch.modes": {
+            "dark": "{primitive.color.gold.300}"
+          },
+          "cc.squatch.legacy": [
+            "--accent",
+            "--focus"
+          ]
+        }
+      },
+      "status": {
+        "level": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}",
+          "$description": "Signal level. Level is ink, not green."
+        },
+        "limit": {
+          "$type": "color",
+          "$value": "{primitive.color.seal.600}",
+          "$description": "The limit: gain reduction, clipping, errors, stamped like a hanko seal. Means nothing else: \"in tune\" and other successes use the accent (DECISIONS.md D1).",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.seal.400}"
+            },
+            "cc.squatch.legacy": [
+              "--seal",
+              "--danger"
+            ]
+          }
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{semantic.color.accent}",
+        "$description": "Focus ring (2 px, 2 px offset)."
+      }
+    },
+    "font": {
+      "ui": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "ui-sans-serif",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "$description": "UI and device legends."
+      },
+      "hand": {
+        "$type": "fontFamily",
+        "$value": [
+          "Lora",
+          "ui-serif",
+          "Georgia",
+          "serif"
+        ],
+        "$description": "The hand's voice: preset, model and capture names."
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "IBM Plex Mono",
+          "ui-monospace",
+          "SF Mono",
+          "Menlo",
+          "Consolas",
+          "monospace"
+        ],
+        "$description": "Every number, with tabular figures."
+      }
+    },
+    "type": {
+      "$type": "typography",
+      "legend": {
+        "$value": {
+          "fontFamily": "{semantic.font.ui}",
+          "fontSize": {
+            "value": 10,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 1.2,
+            "unit": "px"
+          },
+          "lineHeight": 1
+        },
+        "$description": "Device legends: uppercase, tracked +0.12 em (1.2 px at 10 px; DTCG dimensions have no em unit).",
+        "$extensions": {
+          "cc.squatch.type": {
+            "textTransform": "uppercase"
+          }
+        }
+      },
+      "name": {
+        "$value": {
+          "fontFamily": "{semantic.font.hand}",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.15
+        },
+        "$extensions": {
+          "cc.squatch.type": {
+            "fontStyle": "italic"
+          }
+        }
+      },
+      "readout": {
+        "$value": {
+          "fontFamily": "{semantic.font.mono}",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        },
+        "$extensions": {
+          "cc.squatch.type": {
+            "fontVariantNumeric": "tabular-nums"
+          }
+        }
+      },
+      "body": {
+        "$value": {
+          "fontFamily": "{semantic.font.ui}",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      }
+    },
+    "space": {
+      "1": {
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      },
+      "2": {
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      },
+      "3": {
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        }
+      },
+      "4": {
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      },
+      "5": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "6": {
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      },
+      "7": {
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        }
+      },
+      "$type": "dimension"
+    },
+    "radius": {
+      "$type": "dimension",
+      "sm": {
+        "$value": {
+          "value": 6,
+          "unit": "px"
+        }
+      },
+      "md": {
+        "$value": {
+          "value": 10,
+          "unit": "px"
+        }
+      },
+      "control": {
+        "$value": {
+          "value": 6,
+          "unit": "px"
+        }
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "target": {
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "Minimum hit target (WCAG 2.5.5 AAA / Apple HIG)."
+      },
+      "control": {
+        "$value": {
+          "value": 30,
+          "unit": "px"
+        }
+      }
+    },
+    "stroke": {
+      "$type": "dimension",
+      "contour": {
+        "$value": {
+          "value": 2.25,
+          "unit": "px"
+        },
+        "$description": "Pen: silhouettes, knob caps, pointers (device units)."
+      },
+      "detail": {
+        "$value": {
+          "value": 1.25,
+          "unit": "px"
+        },
+        "$description": "Pen: lids, panels, nuts."
+      },
+      "hatch": {
+        "$value": {
+          "value": 0.75,
+          "unit": "px"
+        },
+        "$description": "Pen: hatch, ticks, axes."
+      },
+      "focus": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      }
+    },
+    "motion": {
+      "duration": {
+        "$type": "duration",
+        "fast": {
+          "$value": {
+            "value": 140,
+            "unit": "ms"
+          }
+        },
+        "med": {
+          "$value": {
+            "value": 240,
+            "unit": "ms"
+          }
+        },
+        "settle": {
+          "$value": {
+            "value": 750,
+            "unit": "ms"
+          },
+          "$description": "The one expressive transition: a glyph unfurls when a block is added. Played once, never looped."
+        }
+      },
+      "easing": {
+        "standard": {
+          "$type": "cubicBezier",
+          "$value": [
+            0.2,
+            0.7,
+            0.2,
+            1
+          ]
+        }
+      },
+      "ballistics": {
+        "$type": "duration",
+        "$description": "How audio features drive marks. The eye needs a longer release than the ear.",
+        "level-attack": {
+          "$value": {
+            "value": 15,
+            "unit": "ms"
+          }
+        },
+        "level-release": {
+          "$value": {
+            "value": 280,
+            "unit": "ms"
+          }
+        },
+        "env-attack": {
+          "$value": {
+            "value": 5,
+            "unit": "ms"
+          }
+        },
+        "env-release": {
+          "$value": {
+            "value": 120,
+            "unit": "ms"
+          }
+        },
+        "gr-attack": {
+          "$value": {
+            "value": 10,
+            "unit": "ms"
+          }
+        },
+        "gr-release": {
+          "$value": {
+            "value": 150,
+            "unit": "ms"
+          }
+        },
+        "clip-hold": {
+          "$value": {
+            "value": 450,
+            "unit": "ms"
+          }
+        },
+        "readout": {
+          "$value": {
+            "value": 100,
+            "unit": "ms"
+          },
+          "$description": "Readouts update at 10 Hz."
+        },
+        "reduced-step": {
+          "$value": {
+            "value": 250,
+            "unit": "ms"
+          },
+          "$description": "Reduced motion: quantised 4 Hz steps, no easing."
+        }
+      }
+    },
+    "elevation": {
+      "$type": "shadow",
+      "raised": {
+        "$value": {
+          "color": "{primitive.color.paper.400}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      }
+    },
+    "ink": {
+      "$description": "Brand-specific ink parameters. DTCG has no brush type, so each is a plain number; the group is marked as one composite for our build.",
+      "$extensions": {
+        "cc.squatch.ink": {
+          "composite": "brush"
+        }
+      },
+      "brush": {
+        "$type": "number",
+        "entry": {
+          "$value": 0.12,
+          "$description": "Press-in length, 0..1 of the stroke."
+        },
+        "exit": {
+          "$value": 0.35,
+          "$description": "Lift-off length, 0..1."
+        },
+        "belly": {
+          "$value": 0.15,
+          "$description": "Mid-stroke swell."
+        },
+        "dry": {
+          "$value": 0.5,
+          "$description": "0 wet .. 1 very dry: how far dry streaks reach."
+        },
+        "streaks": {
+          "$value": 7,
+          "$description": "Dry-brush cuts per stroke (5-9 in the ink look)."
+        },
+        "jitter": {
+          "$value": 0.07,
+          "$description": "Per-sample width jitter; seeded, never re-randomised per frame."
+        },
+        "bleed": {
+          "$value": 0.15,
+          "$description": "Halo opacity, ink wicking into paper."
+        }
+      },
+      "grain": {
+        "$type": "number",
+        "opacity": {
+          "$type": "number",
+          "$value": 0.12,
+          "$description": "Paper-grain overlay opacity.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": 0.07
+            },
+            "cc.squatch.ink": {
+              "blend": {
+                "light": "multiply",
+                "dark": "screen"
+              },
+              "tile": 256
+            }
+          }
+        },
+        "frequency": {
+          "$value": 0.045,
+          "$description": "feTurbulence baseFrequency of the grain tile."
+        }
+      },
+      "edge": {
+        "$type": "number",
+        "roughness": {
+          "$value": 6,
+          "$description": "feDisplacementMap scale for brushed lettering (0 = crisp)."
+        }
+      },
+      "seal": {
+        "$type": "number",
+        "roughness": {
+          "$value": 4,
+          "$description": "Edge displacement of the seal (hanko) mark.",
+          "$extensions": {
+            "cc.squatch.ink": {
+              "shape": "chop"
+            }
+          }
+        }
+      }
+    }
+  },
+  "component": {
+    "pedal": {
+      "$type": "color",
+      "face": {
+        "$value": "{semantic.color.surface.page}"
+      },
+      "edge": {
+        "$value": "{semantic.color.text.primary}"
+      },
+      "lid": {
+        "$value": "{semantic.color.line.faint}"
+      },
+      "corner-radius": {
+        "$type": "dimension",
+        "$value": "{semantic.radius.md}"
+      }
+    },
+    "knob": {
+      "$type": "color",
+      "cap": {
+        "$value": "{semantic.color.surface.raised}"
+      },
+      "outline": {
+        "$value": "{semantic.color.text.primary}"
+      },
+      "pointer": {
+        "$value": "{semantic.color.text.primary}"
+      },
+      "track": {
+        "$value": "{semantic.color.line.faint}"
+      },
+      "value": {
+        "$value": "{semantic.color.accent}"
+      },
+      "ring-width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 3,
+          "unit": "px"
+        }
+      },
+      "travel": {
+        "$type": "number",
+        "$value": 270,
+        "$description": "Degrees of rotation, -135 to +135."
+      }
+    },
+    "footswitch": {
+      "$type": "color",
+      "body": {
+        "$value": "{semantic.color.surface.sunken}"
+      },
+      "outline": {
+        "$value": "{semantic.color.text.primary}"
+      }
+    },
+    "led": {
+      "$type": "color",
+      "on": {
+        "$value": "{semantic.color.accent}"
+      },
+      "off": {
+        "$value": "{semantic.color.line.faint}"
+      },
+      "clip": {
+        "$value": "{semantic.color.status.limit}"
+      }
+    },
+    "legend": {
+      "$type": "color",
+      "color": {
+        "$value": "{semantic.color.text.secondary}"
+      },
+      "type": {
+        "$type": "typography",
+        "$value": "{semantic.type.legend}",
+        "$description": "Knob and switch legends. A skin may swap the face, e.g. to the hand."
+      }
+    },
+    "glyph": {
+      "$type": "color",
+      "ink": {
+        "$value": "{semantic.color.text.primary}"
+      },
+      "value": {
+        "$value": "{semantic.color.accent}"
+      }
+    },
+    "meter": {
+      "$type": "color",
+      "level": {
+        "$value": "{semantic.color.status.level}"
+      },
+      "limit": {
+        "$value": "{semantic.color.status.limit}"
+      }
+    }
+  },
+  "hardware": {
+    "$description": "Emissive surfaces on the pedal itself: small displays and indicator LEDs. Mode-less: a lit display on a dark stage is always dark, so every value aliases a primitive directly and none has a per-mode value. Not emitted to CSS and not overridable by skins. Built to dist/c/*_hardware.h, dist/json/*.hardware.json, and the C++ and Swift token files.",
+    "display": {
+      "$type": "color",
+      "$description": "A colour display (RGB565 TFT or OLED). The reduced palette: six roles, index order fixed (0..5) for palette-indexed drivers.",
+      "background": {
+        "$value": "{primitive.color.black}",
+        "$description": "Pixels off. True black: an OLED draws no current, and a TFT backlight bleeds least."
+      },
+      "text": {
+        "$value": "{primitive.color.ink.200}",
+        "$description": "Values, names, menu items."
+      },
+      "secondary": {
+        "$value": "{primitive.color.ink.400}",
+        "$description": "Legends, units, the unselected item."
+      },
+      "accent": {
+        "$value": "{primitive.color.gold.300}",
+        "$description": "Your hand: the selected item, the value being turned, in tune."
+      },
+      "limit": {
+        "$value": "{primitive.color.seal.400}",
+        "$description": "The limit only: CLIP, gain reduction, errors. Always with a word or shape as well."
+      },
+      "rule": {
+        "$value": "{primitive.color.ink.600}",
+        "$description": "Tracks and dividers. Decorative: never the only cue."
+      }
+    },
+    "led": {
+      "$type": "color",
+      "$description": "Indicator lamps. For an RGB LED (WS2812, SK6812) the build also emits gamma-decoded PWM duties; for a single-colour LED the value is the design intent for choosing the part (amber for the hand, red for the limit).",
+      "engaged": {
+        "$value": "{primitive.color.gold.300}",
+        "$description": "Effect on; in tune."
+      },
+      "limit": {
+        "$value": "{primitive.color.seal.400}",
+        "$description": "Clip, held for motion.ballistics.clip-hold. Placed apart from the engaged lamp, because amber and red lamps are close for red-green colour-blind players."
+      },
+      "off": {
+        "$value": "{primitive.color.black}",
+        "$description": "Unlit."
+      },
+      "max-duty": {
+        "$type": "number",
+        "$value": 0.35,
+        "$description": "Brightness ceiling, 0..1 of full PWM, so a lamp does not glare on a dark stage. A starting point: tune on the enclosure behind its lens."
+      }
+    }
+  }
+}

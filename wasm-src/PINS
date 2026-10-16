@@ -1,0 +1,11 @@
+# Pinned inputs for the CI wasm build (wasm/ci-build.sh). Shell-sourceable. Change a line here and the asset
+# tree of the public demo gets a new content address (tools/export-public.mjs hashes this file).
+#
+# NAM Core is the upstream MIT project at the exact commit below; wasm/experimental-fast.patch adds the
+# experimental fast path (src/NAM/wavenet/experimental_fast.*) on top of it.
+NAM_CORE_REPO=https://github.com/sdatkinson/NeuralAmpModelerCore.git
+NAM_CORE_COMMIT=0b3d3c97b0859a3a8c92a8628c4dd89a25eb5842
+# Emscripten, installed with the emsdk tag below (tag 6.0.10 is commit a2b92777574c2feda07994cd4f1079a3dfc151f8).
+EMSDK_REPO=https://github.com/emscripten-core/emsdk.git
+EMSDK_COMMIT=a2b92777574c2feda07994cd4f1079a3dfc151f8
+EMSDK_VERSION=6.0.10

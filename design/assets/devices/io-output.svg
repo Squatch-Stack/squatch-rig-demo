@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 190" width="130" height="190">
+<title>output plate</title>
+<style>
+.c{fill:none;stroke:var(--ink,#1C160E);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.d{fill:none;stroke:var(--ink,#1C160E);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+.h{fill:none;stroke:var(--ink-soft,#6B5B3E);stroke-width:.75;stroke-linecap:round}
+.p{fill:var(--paper,#F7F5F0)}
+.p2{fill:var(--paper-2,#E8E0D4)}
+.k{fill:var(--ink,#1C160E)}
+.a{fill:var(--accent,#9C7208)}
+.slot{fill:none;stroke:none}
+</style>
+<defs><mask id="m-io-out" maskUnits="userSpaceOnUse"><rect x="-2000" y="-2000" width="6000" height="6000" fill="#fff"/><g fill="none" stroke="#000" stroke-linecap="round"><path d="M73.2 96.5C75.6 96.6 83.3 97 87.8 97.4C92.2 97.8 96.8 98.4 99.9 98.9C103 99.5 105.4 100.4 106.4 100.6C107.5 100.9 106.4 100.6 106.4 100.6" stroke-width="0.7"/><path d="M73.2 98.1C75.7 98.2 83.4 98.3 87.8 98.5C92.3 98.7 96.8 99 99.9 99.4C103.1 99.7 105.4 100.2 106.4 100.4C107.5 100.6 106.4 100.4 106.4 100.4" stroke-width="0.4"/><path d="M73.3 100.1C75.8 100.1 83.4 99.9 87.9 99.9C92.3 99.8 96.9 99.8 100 99.9C103.1 99.9 105.3 100 106.4 100.1C107.5 100.1 106.4 100.1 106.4 100.1" stroke-width="0.7"/><path d="M80.7 101.3C83 101.2 90.6 100.8 94.5 100.6C98.4 100.4 102 100.1 104 100C106 99.9 106 99.9 106.4 99.8" stroke-width="0.6"/><path d="M80.8 102.5C83.1 102.3 90.6 101.6 94.5 101.2C98.4 100.8 102 100.3 104 100C106 99.7 106 99.7 106.4 99.6" stroke-width="0.3"/><path d="M80.8 103.4C83.1 103.2 90.7 102.3 94.5 101.7C98.4 101.1 102 100.4 104 100C106 99.6 106 99.5 106.4 99.4" stroke-width="0.3"/><path d="M73.6 105.3C76 105 83.6 104.1 88 103.4C92.4 102.7 97 101.9 100 101.2C103.1 100.5 105.3 99.6 106.4 99.3C107.4 98.9 106.4 99.3 106.4 99.3" stroke-width="1"/></g></mask></defs>
+<g id="output">
+<rect class="p c" x="10" y="8" width="110" height="174" rx="14"/>
+<rect class="d" x="15" y="13" width="100" height="164" rx="10"/>
+<rect class="p d" x="3" y="42" width="7" height="16" rx="1.5"/><path class="h" d="M6.5 42v16"/><circle class="slot" data-slot="jack-in" cx="-1" cy="50" r="6"/>
+<polygon class="p c" points="84,50 74.5,66.5 55.5,66.5 46,50 55.5,33.5 74.5,33.5"/><circle class="d" cx="65" cy="50" r="12"/><circle class="p2 c" cx="65" cy="50" r="7"/><circle class="k" cx="65" cy="50" r="3"/>
+<path class="h" d="M26 102H104" opacity=".6"/>
+<g class="glyph" id="output-glyph"><path class="k" mask="url(#m-io-out)" d="M26 104C26.5 104.9 27.8 108.4 28.9 109.5C29.9 110.5 31 110.1 32.1 110.2C33.3 110.2 34.6 109.9 35.9 109.8C37.3 109.8 38.8 110.2 40.3 110.1C41.8 110 43.3 109.5 44.9 109.4C46.5 109.3 48.2 109.8 49.9 109.7C51.6 109.6 53.2 108.8 55 108.7C56.7 108.6 58.4 109.3 60.3 109.2C62.3 109.2 64.4 108.7 66.6 108.3C68.8 107.9 71.2 107.3 73.6 106.9C76 106.4 78.5 106.1 80.9 105.7C83.3 105.3 85.8 104.9 88.1 104.5C90.3 104 92.6 103.3 94.6 102.9C96.6 102.4 98.5 102.1 100 101.6C101.6 101.1 103.3 100.3 104 100L104 100C103.3 99.8 101.5 99.1 99.9 98.7C98.3 98.4 96.4 98.2 94.4 97.9C92.3 97.6 90.1 97.1 87.7 96.8C85.4 96.6 83 96.4 80.5 96.2C78.1 96 75.6 95.9 73.1 95.7C70.7 95.4 68.3 95 66 94.8C63.8 94.6 61.6 94.4 59.6 94.5C57.6 94.6 56 95.5 54.2 95.6C52.5 95.7 50.7 95.1 49 95.2C47.3 95.3 45.7 95.9 44.1 96.1C42.4 96.2 40.8 95.9 39.3 96C37.8 96.1 36.4 96.7 35 96.8C33.7 97 32.4 96.8 31.2 97.1C30.1 97.3 29 97 28.1 98.2C27.2 99.4 26.3 103 26 104A0.3 0.3 0 0 1 26 104Z"/></g>
+<rect class="slot" data-slot="glyph" x="26" y="82" width="78" height="40"/>
+<g class="knob" data-i="0" data-param="volume"><circle class="p c" cx="65" cy="150" r="12"/><circle class="d" cx="65" cy="150" r="8.2"/><path class="c" d="M65 147.7L65 140.6"/><path class="h" d="M54.1 160.9L52.7 162.3M50.8 144.1L48.9 143.3M65 134.6L65 132.6M79.2 144.1L81.1 143.3M75.9 160.9L77.3 162.3"/><circle class="slot" data-slot="knob" data-i="0" cx="65" cy="150" r="18"/></g>
+<circle class="p d led" cx="102" cy="24" r="3.2"/><circle class="slot" data-slot="led" cx="102" cy="24" r="3.2"/>
+</g>
+</svg>

@@ -1,0 +1,24 @@
+{
+ "name": "brush-ink",
+ "note": "The default skin. Maps the design job's device SVGs (design/assets/devices, written by design/src/rigart.py) onto node types; colours come from web/css/app.css. {ways} picks the 2/3/4-path splitter and mixer art. ?skin=ink selects the older built-in line art.",
+ "devices": {
+  "input": { "svg": "assets/devices/io-input.svg", "scale": 0.8 },
+  "output": { "svg": "assets/devices/io-output.svg", "scale": 0.8 },
+  "gate": { "svg": "assets/devices/pedal-gate.svg", "scale": 0.8 },
+  "compressor": { "svg": "assets/devices/pedal-compressor.svg", "scale": 0.8 },
+  "overdrive": { "svg": "assets/devices/pedal-overdrive.svg", "scale": 0.8 },
+  "bloom": { "svg": "assets/devices/pedal-bloom.svg", "scale": 0.8,
+   "face": {
+    "glyph": { "ink": "bloomLeaf", "inkDim": "bloomDim", "paper": "bloom" },
+    "knob": { "paper": "bloomLeaf", "ink": "bloom", "inkDim": "bloom", "inkFaint": "bloomDim", "accent": "bloomLeaf" },
+    "legend": { "inkDim": "bloomLeaf", "accent": "bloomLeaf" },
+    "led": { "accent": "bloomLed", "paper": "bloom", "ink": "bloomLeaf", "inkDim": "bloomDim" } } },
+  "envfilter": { "svg": "assets/devices/pedal-envfilter.svg", "scale": 0.8 },
+  "reverb": { "svg": "assets/devices/pedal-reverb.svg", "scale": 0.8 },
+  "limiter": { "svg": "assets/devices/pedal-limiter.svg", "scale": 0.8 },
+  "splitter": { "svg": "assets/devices/splitter-{ways}.svg", "ways": [2, 3, 4], "scale": 0.8 },
+  "mixer": { "svg": "assets/devices/mixer-{ways}.svg", "ways": [2, 3, 4], "scale": 0.8 },
+  "nam": { "svg": "assets/devices/amp-head.svg", "scale": 0.5, "params": { "gain": "input", "master": "output" } },
+  "cab": { "svg": "assets/devices/cab-2x12.svg", "scale": 0.4 }
+ }
+}

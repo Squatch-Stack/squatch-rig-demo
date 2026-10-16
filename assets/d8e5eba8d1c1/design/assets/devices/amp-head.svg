@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 230" width="520" height="230">
+<title>amp head</title>
+<style>
+.c{fill:none;stroke:var(--ink,#1C160E);stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round}
+.d{fill:none;stroke:var(--ink,#1C160E);stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+.h{fill:none;stroke:var(--ink-soft,#6B5B3E);stroke-width:.75;stroke-linecap:round}
+.p{fill:var(--paper,#F7F5F0)}
+.p2{fill:var(--paper-2,#E8E0D4)}
+.k{fill:var(--ink,#1C160E)}
+.a{fill:var(--accent,#9C7208)}
+.slot{fill:none;stroke:none}
+</style>
+<defs><mask id="m-amp-plate" maskUnits="userSpaceOnUse"><rect x="-2000" y="-2000" width="6000" height="6000" fill="#fff"/><g fill="none" stroke="#000" stroke-linecap="round"><path d="M289.4 86.5C292 86 300.3 84.2 304.8 83.3C309.2 82.4 313.7 81.5 316 81C318.3 80.5 318.4 80.6 318.9 80.6" stroke-width="0.7"/><path d="M297.4 85.8C299.8 85.1 307.8 82.9 311.3 82C314.9 81.1 317.6 80.7 318.8 80.4C320 80.2 318.8 80.4 318.8 80.4" stroke-width="0.2"/><path d="M274.2 88.4C276.7 88.3 284.5 88.9 289.7 88.2C294.9 87.5 300.7 85.4 305.1 84.2C309.5 83 313.7 81.7 316 81C318.3 80.3 318.3 80.4 318.7 80.3" stroke-width="0.2"/><path d="M282 89.8C284.6 89.3 292.9 88.2 297.8 86.9C302.7 85.7 308 83.6 311.5 82.4C315 81.3 317.5 80.5 318.7 80.1C319.9 79.8 318.7 80.1 318.7 80.1" stroke-width="0.3"/><path d="M273.9 90.9C276.5 90.8 284.8 90.9 290 90C295.3 89 301.1 86.7 305.4 85.2C309.7 83.7 313.8 81.9 316 81C318.2 80.1 318.2 80.1 318.6 79.9" stroke-width="0.2"/><path d="M273.8 91.5C276.5 91.3 284.8 91.4 290.1 90.4C295.4 89.4 301.2 87 305.5 85.4C309.8 83.9 313.8 81.9 316 81C318.2 80.1 318.2 80.1 318.6 79.9" stroke-width="0.4"/><path d="M265 90.7C267.8 91 276.5 93.1 282.1 92.8C287.6 92.5 293.3 90.3 298.3 88.7C303.2 87.1 308.3 84.6 311.7 83.1C315.1 81.6 317.4 80.3 318.6 79.7C319.7 79.2 318.6 79.7 318.6 79.7" stroke-width="0.7"/></g></mask></defs>
+<g id="amp-head">
+<path class="c" d="M200 36q2-22 26-22h68q24 0 26 22"/>
+<path class="d" d="M214 36q2-12 16-12h60q14 0 16 12"/>
+<path class="d" d="M196 36v-5h10v5M314 36v-5h10v5"/>
+<rect class="p c" x="12" y="36" width="496" height="184" rx="12"/>
+<path class="d" d="M38 39H24q-9 0 -9 9V62"/>
+<path class="d" d="M482 39H496q9 0 9 9V62"/>
+<path class="d" d="M38 217H24q-9 0 -9 -9V194"/>
+<path class="d" d="M482 217H496q9 0 9 -9V194"/>
+<clipPath id="grille-clip"><rect x="30" y="50" width="460" height="74" rx="5"/></clipPath>
+<path class="h" clip-path="url(#grille-clip)" d="M30 50l-41 74M43 50l-41 74M56 50l-41 74M69 50l-41 74M82 50l-41 74M95 50l-41 74M108 50l-41 74M121 50l-41 74M134 50l-41 74M147 50l-41 74M160 50l-41 74M173 50l-41 74M186 50l-41 74M199 50l-41 74M212 50l-41 74M225 50l-41 74M238 50l-41 74M251 50l-41 74M264 50l-41 74M277 50l-41 74M290 50l-41 74M303 50l-41 74M316 50l-41 74M329 50l-41 74M342 50l-41 74M355 50l-41 74M368 50l-41 74M381 50l-41 74M394 50l-41 74M407 50l-41 74M420 50l-41 74M433 50l-41 74M446 50l-41 74M459 50l-41 74M472 50l-41 74M485 50l-41 74M498 50l-41 74M511 50l-41 74M524 50l-41 74M537 50l-41 74M550 50l-41 74M563 50l-41 74"/>
+<rect class="d" x="30" y="50" width="460" height="74" rx="5"/>
+<rect class="p d" x="190" y="72" width="140" height="30" rx="4"/>
+<g class="glyph" id="amp-glyph"><path class="k" mask="url(#m-amp-plate)" d="M204 92C204.9 92.2 207.5 93.3 209.6 93.3C211.6 93.4 214 92.7 216.5 92.2C219 91.7 221.7 91 224.3 90.4C227 89.8 229.8 88.9 232.4 88.5C235 88 237.5 87.8 240.1 87.7C242.6 87.7 245 88 247.7 88.4C250.3 88.8 253.1 89.6 255.9 90.2C258.8 90.8 261.8 91.2 264.7 91.8C267.7 92.3 270.6 93.3 273.5 93.6C276.4 94 279.3 94.2 282.1 93.9C284.9 93.6 287.7 92.7 290.4 91.9C293.1 91.2 295.9 90.3 298.5 89.4C301 88.5 303.5 87.3 305.8 86.3C308 85.3 310.1 84.2 311.8 83.4C313.5 82.5 315.3 81.4 316 81L316 81C315.2 81.1 313.1 81.2 311.2 81.6C309.3 81.9 307 82.5 304.7 83.1C302.3 83.6 299.7 84.2 297.1 84.7C294.6 85.2 291.9 85.9 289.3 86.1C286.8 86.3 284.3 86.2 281.9 86.1C279.4 86 277.1 85.7 274.5 85.4C271.9 85.1 269.1 84.8 266.2 84.3C263.4 83.7 260.5 82.6 257.6 82C254.6 81.4 251.6 81 248.6 80.7C245.7 80.4 242.8 80.2 239.9 80.3C237 80.3 234.2 80.8 231.3 81.2C228.4 81.6 225.3 82.1 222.5 82.8C219.7 83.4 216.9 84.3 214.5 85.2C212.1 86.1 209.8 86.9 208 88.1C206.3 89.2 204.7 91.3 204 92A0.3 0.3 0 0 1 204 92Z"/></g>
+<rect class="slot" data-slot="nameplate" x="190" y="72" width="140" height="30"/>
+<rect class="p2 d" x="30" y="136" width="460" height="72" rx="5"/>
+<g class="knob" data-i="0" data-param="gain"><circle class="p c" cx="104" cy="168" r="14"/><circle class="d" cx="104" cy="168" r="9.5"/><path class="c" d="M106.4 166.6L113.5 162.5"/><path class="h" d="M91.3 180.7L89.6 182.4M87.4 161.1L85.2 160.2M104 150.1L104 147.7M120.6 161.1L122.8 160.2M116.7 180.7L118.4 182.4"/><circle class="slot" data-slot="knob" data-i="0" cx="104" cy="168" r="21"/></g>
+<g class="knob" data-i="1" data-param="bass"><circle class="p c" cx="156" cy="168" r="14"/><circle class="d" cx="156" cy="168" r="9.5"/><path class="c" d="M155.5 165.3L154.1 157.2"/><path class="h" d="M143.3 180.7L141.6 182.4M139.4 161.1L137.2 160.2M156 150.1L156 147.7M172.6 161.1L174.8 160.2M168.7 180.7L170.4 182.4"/><circle class="slot" data-slot="knob" data-i="1" cx="156" cy="168" r="21"/></g>
+<g class="knob" data-i="2" data-param="mid"><circle class="p c" cx="208" cy="168" r="14"/><circle class="d" cx="208" cy="168" r="9.5"/><path class="c" d="M208.5 165.3L209.9 157.2"/><path class="h" d="M195.3 180.7L193.6 182.4M191.4 161.1L189.2 160.2M208 150.1L208 147.7M224.6 161.1L226.8 160.2M220.7 180.7L222.4 182.4"/><circle class="slot" data-slot="knob" data-i="2" cx="208" cy="168" r="21"/></g>
+<g class="knob" data-i="3" data-param="treble"><circle class="p c" cx="260" cy="168" r="14"/><circle class="d" cx="260" cy="168" r="9.5"/><path class="c" d="M260.9 165.4L263.7 157.7"/><path class="h" d="M247.3 180.7L245.6 182.4M243.4 161.1L241.2 160.2M260 150.1L260 147.7M276.6 161.1L278.8 160.2M272.7 180.7L274.4 182.4"/><circle class="slot" data-slot="knob" data-i="3" cx="260" cy="168" r="21"/></g>
+<g class="knob" data-i="4" data-param="presence"><circle class="p c" cx="312" cy="168" r="14"/><circle class="d" cx="312" cy="168" r="9.5"/><path class="c" d="M310.6 165.6L306.5 158.5"/><path class="h" d="M299.3 180.7L297.6 182.4M295.4 161.1L293.2 160.2M312 150.1L312 147.7M328.6 161.1L330.8 160.2M324.7 180.7L326.4 182.4"/><circle class="slot" data-slot="knob" data-i="4" cx="312" cy="168" r="21"/></g>
+<g class="knob" data-i="5" data-param="master"><circle class="p c" cx="364" cy="168" r="14"/><circle class="d" cx="364" cy="168" r="9.5"/><path class="c" d="M361.9 166.2L355.6 161"/><path class="h" d="M351.3 180.7L349.6 182.4M347.4 161.1L345.2 160.2M364 150.1L364 147.7M380.6 161.1L382.8 160.2M376.7 180.7L378.4 182.4"/><circle class="slot" data-slot="knob" data-i="5" cx="364" cy="168" r="21"/></g>
+<circle class="p c" cx="56" cy="168" r="10"/><circle class="k" cx="56" cy="168" r="3.5"/><circle class="slot" data-slot="jack-in" cx="56" cy="168" r="12"/>
+<circle class="d" cx="422" cy="176" r="5"/><path class="c" d="M422 176l-3 -14"/><circle class="slot" data-slot="toggle" data-i="0" cx="422" cy="172" r="9"/>
+<circle class="d" cx="446" cy="176" r="5"/><path class="c" d="M446 176l3 -14"/><circle class="slot" data-slot="toggle" data-i="1" cx="446" cy="172" r="9"/>
+<circle class="p c" cx="472" cy="168" r="8"/><path class="h" d="M472 168l7 0M472 168l3.5 6.1M472 168l-3.5 6.1M472 168l-7 0M472 168l-3.5 -6.1M472 168l3.5 -6.1"/><circle class="slot" data-slot="led" cx="472" cy="168" r="8"/>
+<circle class="slot" data-slot="jack-out" cx="512" cy="168" r="8"/>
+</g>
+</svg>

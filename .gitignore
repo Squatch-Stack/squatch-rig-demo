@@ -1,0 +1,6 @@
+# Build outputs are never committed: GitHub Actions builds nam.wasm (see .github/workflows/pages.yml).
+*.wasm
+/_site/
+/.work/
+node_modules/
+.DS_Store

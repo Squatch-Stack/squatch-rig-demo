@@ -1,0 +1,207 @@
+{
+  "FULL_PATH": "/",
+  "DESCRIPTION": "Squatch Stack",
+  "CONTENTS": {
+    "trail-od": {
+      "FULL_PATH": "/trail-od",
+      "DESCRIPTION": "Squatch Trail OD",
+      "SQUATCH": {
+        "profile": "cc.squatch.control/1",
+        "product": "cc.squatch.trail-od",
+        "form": "3-knob",
+        "house": "Squatch Stack"
+      },
+      "CONTENTS": {
+        "drive": {
+          "FULL_PATH": "/trail-od/drive",
+          "DESCRIPTION": "Drive",
+          "TYPE": "f",
+          "ACCESS": 3,
+          "VALUE": [
+            0.5
+          ],
+          "RANGE": [
+            {
+              "MIN": 0,
+              "MAX": 1
+            }
+          ],
+          "CLIPMODE": "both",
+          "SQUATCH": {
+            "id": 1,
+            "role": "param",
+            "shortName": "Drive",
+            "default": 0.5,
+            "taper": "linear",
+            "steps": 0,
+            "page": 0,
+            "slot": 0,
+            "smoothMs": 20,
+            "display": {
+              "scale": 10,
+              "decimals": 1
+            }
+          }
+        },
+        "tone": {
+          "FULL_PATH": "/trail-od/tone",
+          "DESCRIPTION": "Tone",
+          "TYPE": "f",
+          "ACCESS": 3,
+          "VALUE": [
+            0.5
+          ],
+          "RANGE": [
+            {
+              "MIN": 0,
+              "MAX": 1
+            }
+          ],
+          "CLIPMODE": "both",
+          "SQUATCH": {
+            "id": 2,
+            "role": "param",
+            "shortName": "Tone",
+            "default": 0.5,
+            "taper": "linear",
+            "steps": 0,
+            "page": 0,
+            "slot": 1,
+            "smoothMs": 20,
+            "display": {
+              "scale": 10,
+              "decimals": 1
+            }
+          }
+        },
+        "level": {
+          "FULL_PATH": "/trail-od/level",
+          "DESCRIPTION": "Level",
+          "TYPE": "f",
+          "ACCESS": 3,
+          "VALUE": [
+            -6
+          ],
+          "RANGE": [
+            {
+              "MIN": -30,
+              "MAX": 12
+            }
+          ],
+          "CLIPMODE": "both",
+          "UNIT": [
+            "gain.db"
+          ],
+          "SQUATCH": {
+            "id": 3,
+            "role": "param",
+            "shortName": "Level",
+            "unit": "db",
+            "default": -6,
+            "taper": "linear",
+            "steps": 0,
+            "page": 0,
+            "slot": 2,
+            "smoothMs": 20,
+            "display": {
+              "decimals": 1
+            }
+          }
+        },
+        "bypass": {
+          "FULL_PATH": "/trail-od/bypass",
+          "DESCRIPTION": "Bypass",
+          "TYPE": "T",
+          "ACCESS": 3,
+          "VALUE": [
+            false
+          ],
+          "SQUATCH": {
+            "id": 4,
+            "role": "bypass",
+            "shortName": "Bypass",
+            "default": 0,
+            "taper": "linear",
+            "steps": 1,
+            "smoothMs": 0
+          }
+        },
+        "footswitch": {
+          "FULL_PATH": "/trail-od/footswitch",
+          "DESCRIPTION": "Footswitch",
+          "TYPE": "s",
+          "ACCESS": 1,
+          "RANGE": [
+            {
+              "VALS": [
+                "press",
+                "release",
+                "double",
+                "long"
+              ]
+            }
+          ],
+          "SQUATCH": {
+            "id": 5,
+            "role": "fs_latching",
+            "drives": "bypass",
+            "events": [
+              "press",
+              "release",
+              "double",
+              "long"
+            ]
+          }
+        },
+        "meters": {
+          "FULL_PATH": "/trail-od/meters",
+          "DESCRIPTION": "meters",
+          "CONTENTS": {
+            "out": {
+              "FULL_PATH": "/trail-od/meters/out",
+              "DESCRIPTION": "Output level",
+              "TYPE": "f",
+              "ACCESS": 1,
+              "VALUE": [
+                -60
+              ],
+              "RANGE": [
+                {
+                  "MIN": -60,
+                  "MAX": 0
+                }
+              ],
+              "CLIPMODE": "both",
+              "UNIT": [
+                "gain.db"
+              ],
+              "SQUATCH": {
+                "id": 100,
+                "role": "meter",
+                "unit": "db",
+                "default": -60,
+                "rateHz": 30
+              }
+            },
+            "clip": {
+              "FULL_PATH": "/trail-od/meters/clip",
+              "DESCRIPTION": "Clip",
+              "TYPE": "T",
+              "ACCESS": 1,
+              "VALUE": [
+                false
+              ],
+              "SQUATCH": {
+                "id": 101,
+                "role": "meter",
+                "default": 0,
+                "steps": 1,
+                "rateHz": 30
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

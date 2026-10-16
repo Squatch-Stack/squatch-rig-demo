@@ -1,0 +1,69 @@
+name: Build and deploy
+
+# nam.wasm is never committed. This workflow builds it from pinned public sources (wasm-src/PINS: upstream NAM Core
+# at one commit, wasm-src/experimental-fast.patch, one Emscripten version), assembles the site, scans EVERY file of it
+# (binaries included) with tools/public-guard.mjs, attests the wasm, and deploys GitHub Pages from the built output.
+# Pull requests build and scan but never attest or deploy.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write       # build provenance (OIDC)
+      attestations: write
+    steps:
+      # The org requires actions pinned to a full commit SHA.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: The guard catches a planted failure
+        run: node tools/public-guard.mjs --self-test
+      - name: No build output is committed
+        run: |
+          bad="$(git ls-files '*.wasm')"
+          if [ -n "$bad" ]; then echo "committed build output: $bad" >&2; exit 1; fi
+      - name: Build nam.wasm from the pinned sources
+        run: wasm-src/ci-build.sh "$RUNNER_TEMP/wasm-out" "$RUNNER_TEMP/wasm-work"
+      - name: Assemble the site (places the wasm, writes the manifest, runs the guard)
+        run: node tools/assemble-site.mjs --wasm "$RUNNER_TEMP/wasm-out/nam.wasm" --experimental "$RUNNER_TEMP/wasm-out/nam-experimental.wasm" --src . --out _site
+      - name: Guard, again, on the finished site
+        run: |
+          node tools/public-guard.mjs _site
+      - name: Attest the wasm
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: |
+            _site/wasm/nam.wasm
+            _site/wasm/nam-experimental.wasm
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

@@ -1,0 +1,28 @@
+{
+  "models": [
+    {
+      "hash": "sha256:ceb53469a19ce278e2235da982ae676cb8d5451a8de22a7ecc7a2617d07224d1",
+      "file": "namcore-example-A1.nam",
+      "name": "NAM Core example · A1 standard",
+      "family": "A1",
+      "arch": "WaveNet A1 · 16ch · 20 layers",
+      "bytes": 407452,
+      "sampleRate": null,
+      "loudness": null,
+      "licence": "MIT (NAM Core example model, see LICENSE-NAM-Core-MIT.txt)",
+      "source": "NeuralAmpModelerCore example_models/"
+    },
+    {
+      "hash": "sha256:2d2d744516dc0197737a2c5001010429692d4cb20d72b08264781de626fcf4ca",
+      "file": "namcore-example-A2.nam",
+      "name": "NAM Core example · A2 slimmable",
+      "family": "A2",
+      "arch": "Slimmable · 2 sizes · WaveNet A2 · 8ch · 23 layers",
+      "bytes": 665758,
+      "sampleRate": 48000,
+      "loudness": -26.383899688720703,
+      "licence": "MIT (NAM Core example model, see LICENSE-NAM-Core-MIT.txt)",
+      "source": "NeuralAmpModelerCore example_models/"
+    }
+  ]
+}

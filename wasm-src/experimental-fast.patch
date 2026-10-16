@@ -1,0 +1,1034 @@
+diff --git a/NAM/wavenet/experimental_fast.cpp b/NAM/wavenet/experimental_fast.cpp
+new file mode 100644
+index 0000000..ad1d442
+--- /dev/null
++++ b/NAM/wavenet/experimental_fast.cpp
+@@ -0,0 +1,693 @@
++#if defined(NAM_ENABLE_A2_FAST)
++
++  #include "experimental_fast.h"
++
++  #include <algorithm>
++  #include <array>
++  #include <cmath>
++  #include <cstring>
++  #include <iterator>
++  #include <sstream>
++  #include <stdexcept>
++  #include <string>
++  #include <utility>
++  #include <vector>
++
++  #include "../dsp.h"
++
++namespace nam
++{
++namespace wavenet
++{
++namespace experimental_fast
++{
++namespace
++{
++
++// A planar history ring: C channel planes of `cap` columns, written forward and
++// moved back (keeping `lookback` columns) when a block would run past the end.
++// Every tap read is then one contiguous run per plane. Linear-with-rewind is the
++// strategy #313 measured best for planar A2 kernels.
++struct Ring
++{
++  std::vector<float> data;
++  int cap = 0;
++  int lookback = 0;
++  int wp = 0; // next column to write
++};
++
++template <int C>
++void ring_reset(Ring& r, int lookback, int max_frames)
++{
++  r.lookback = lookback;
++  r.cap = 2 * lookback + max_frames;
++  r.data.assign(static_cast<size_t>(C) * r.cap, 0.0f);
++  r.wp = lookback;
++}
++
++// Append n frames from the planar source (row stride `stride`).
++template <int C>
++void ring_write(Ring& r, const float* src, int stride, int n)
++{
++  if (r.wp + n > r.cap)
++  {
++    for (int c = 0; c < C; c++)
++    {
++      float* plane = r.data.data() + static_cast<size_t>(c) * r.cap;
++      std::memmove(plane, plane + (r.wp - r.lookback), static_cast<size_t>(r.lookback) * sizeof(float));
++    }
++    r.wp = r.lookback;
++  }
++  for (int c = 0; c < C; c++)
++  {
++    std::memcpy(r.data.data() + static_cast<size_t>(c) * r.cap + r.wp, src + static_cast<size_t>(c) * stride,
++                static_cast<size_t>(n) * sizeof(float));
++  }
++  r.wp += n;
++}
++
++struct Layer
++{
++  int K = 0;
++  int D = 0;
++  float slope = 0.01f;
++  std::vector<float> w; // depthwise taps, tap-major: w[k * C + c]
++  std::vector<float> bias; // [C]
++  std::vector<float> mixin; // [C]
++  std::vector<float> l1; // layer 1x1, row-major: l1[out * C + in]
++  std::vector<float> l1b; // [C]
++  Ring ring;
++};
++
++// Reads a weight stream in order, refusing to run past its end.
++class WeightReader
++{
++public:
++  explicit WeightReader(const std::vector<float>& weights)
++  : _it(weights.begin())
++  , _end(weights.end())
++  {
++  }
++
++  float next()
++  {
++    if (_it == _end)
++    {
++      throw std::runtime_error("ExperimentalFastModel: weight stream exhausted");
++    }
++    return *_it++;
++  }
++
++  void read(float* dst, const size_t n)
++  {
++    for (size_t i = 0; i < n; i++)
++    {
++      dst[i] = next();
++    }
++  }
++
++  // A [rows][taps] block, as convolutions are stored, into tap-major dst[tap * rows + row].
++  void read_tap_major(float* dst, const int rows, const int taps)
++  {
++    for (int r = 0; r < rows; r++)
++    {
++      for (int k = 0; k < taps; k++)
++      {
++        dst[static_cast<size_t>(k) * rows + r] = next();
++      }
++    }
++  }
++
++  size_t remaining() const { return static_cast<size_t>(std::distance(_it, _end)); }
++
++private:
++  std::vector<float>::const_iterator _it;
++  std::vector<float>::const_iterator _end;
++};
++
++// One layer's weights, in the generic WaveNet's reading order.
++template <int C>
++void load_layer(Layer& L, WeightReader& reader)
++{
++  L.w.assign(static_cast<size_t>(L.K) * C, 0.0f);
++  reader.read_tap_major(L.w.data(), C, L.K); // depthwise conv: for channel, for tap
++  L.bias.resize(C);
++  reader.read(L.bias.data(), C);
++  L.mixin.resize(C);
++  reader.read(L.mixin.data(), C);
++  L.l1.resize(static_cast<size_t>(C) * C);
++  reader.read(L.l1.data(), L.l1.size());
++  L.l1b.resize(C);
++  reader.read(L.l1b.data(), C);
++}
++
++template <int C>
++class ExperimentalFastModel : public DSP
++{
++public:
++  ExperimentalFastModel(const nlohmann::json& config, std::vector<float> weights, double sample_rate);
++  void process(NAM_SAMPLE** input, NAM_SAMPLE** output, int num_frames) override;
++  int GetPrewarmSamples() override { return _prewarm; }
++
++protected:
++  void SetMaxBufferSize(int max_frames) override;
++
++private:
++  std::vector<Layer> _layers;
++  std::array<float, C> _rechannel{};
++  int _head_k = 0;
++  std::vector<float> _head_w; // tap-major: _head_w[k * C + c]
++  float _head_b = 0.0f;
++  float _head_scale = 1.0f;
++  Ring _head_ring;
++  int _mbs = 0;
++  std::vector<float> _in, _hsum; // planar [C][_mbs]
++  std::vector<float> _cond, _t, _y; // [_mbs]
++  int _prewarm = 0;
++
++  void _parse_config(const nlohmann::json& config);
++  void _load_weights(const std::vector<float>& weights);
++  void _process_block(const NAM_SAMPLE* x, NAM_SAMPLE* out, int n);
++  void _prepare_input(const NAM_SAMPLE* x, int n);
++  void _layer_forward(const Layer& L, int n, bool do_residual);
++  void _head_forward(NAM_SAMPLE* out, int n);
++  template <int T>
++  void _layer_tile(const Layer& L, int f0, int n, bool do_residual);
++  template <int T>
++  void _conv_activation_tile(const Layer& L, int f0, int n, float (&act)[C][T]);
++  template <int T>
++  void _mix_residual_tile(const Layer& L, int f0, const float (&act)[C][T]);
++};
++
++  #ifndef NAM_EXPERIMENTAL_TILE
++    #define NAM_EXPERIMENTAL_TILE 32
++  #endif
++constexpr int kTile = NAM_EXPERIMENTAL_TILE; // frames per register tile; a build-time knob, tuned per core
++
++// One layer over T frames, fused: every tap, the bias, mixin, LeakyReLU, the head
++// accumulation and the whole layer 1x1 run on T-wide register blocks, and memory
++// is touched once per input column read and once per output written. Per element
++// the operation order is exactly the untiled kernel's (taps from zero, oldest
++// first; + bias; + mixin; activation; 1x1 from its first term; + bias; residual).
++template <int C>
++template <int T>
++void ExperimentalFastModel<C>::_layer_tile(const Layer& L, const int f0, const int n, const bool do_residual)
++{
++  float act[C][T];
++  _conv_activation_tile<T>(L, f0, n, act);
++  if (do_residual)
++  {
++    _mix_residual_tile<T>(L, f0, act);
++  }
++}
++
++// The depthwise taps, bias, mixin and LeakyReLU into act, and act into the head sum.
++template <int C>
++template <int T>
++void ExperimentalFastModel<C>::_conv_activation_tile(const Layer& L, const int f0, const int n, float (&act)[C][T])
++{
++  const int K = L.K, D = L.D;
++  const int base = L.ring.wp - n + f0;
++  const float* __restrict cond = _cond.data() + f0;
++  for (int c = 0; c < C; c++)
++  {
++    const float* __restrict h = L.ring.data.data() + static_cast<size_t>(c) * L.ring.cap + base;
++    float acc[T];
++    const float w0 = L.w[c];
++    const float* __restrict s0 = h - (K - 1) * D;
++    for (int i = 0; i < T; i++)
++    {
++      acc[i] = w0 * s0[i];
++    }
++    for (int k = 1; k < K; k++)
++    {
++      const float wk = L.w[static_cast<size_t>(k) * C + c];
++      const float* __restrict sk = h - (K - 1 - k) * D;
++      for (int i = 0; i < T; i++)
++      {
++        acc[i] += wk * sk[i];
++      }
++    }
++    const float b = L.bias[c], m = L.mixin[c], slope = L.slope;
++    float* __restrict hs = _hsum.data() + static_cast<size_t>(c) * _mbs + f0;
++    for (int i = 0; i < T; i++)
++    {
++      const float mix = m * cond[i];
++      float z = (acc[i] + b) + mix;
++      z = z >= 0.0f ? z : z * slope;
++      act[c][i] = z;
++      hs[i] += z;
++    }
++  }
++}
++
++// The layer 1x1 and its bias over act, added to the layer input in place (the residual).
++template <int C>
++template <int T>
++void ExperimentalFastModel<C>::_mix_residual_tile(const Layer& L, const int f0, const float (&act)[C][T])
++{
++  for (int o = 0; o < C; o++)
++  {
++    const float* l1 = L.l1.data() + static_cast<size_t>(o) * C;
++    float t[T];
++    for (int i = 0; i < T; i++)
++    {
++      t[i] = l1[0] * act[0][i];
++    }
++    for (int j = 1; j < C; j++)
++    {
++      for (int i = 0; i < T; i++)
++      {
++        t[i] += l1[j] * act[j][i];
++      }
++    }
++    float* __restrict in = _in.data() + static_cast<size_t>(o) * _mbs + f0;
++    const float lb = L.l1b[o];
++    for (int i = 0; i < T; i++)
++    {
++      in[i] = in[i] + (t[i] + lb);
++    }
++  }
++}
++
++template <int C>
++ExperimentalFastModel<C>::ExperimentalFastModel(const nlohmann::json& config, std::vector<float> weights, double sample_rate)
++: DSP(1, 1, sample_rate)
++{
++  _parse_config(config);
++  _load_weights(weights);
++  // Receptive field, anchored at 1 as the generic WaveNet counts it.
++  _prewarm = 1 + (_head_k - 1);
++  for (const auto& L : _layers)
++  {
++    _prewarm += (L.K - 1) * L.D;
++  }
++}
++
++template <int C>
++void ExperimentalFastModel<C>::_parse_config(const nlohmann::json& config)
++{
++  const auto& la = config["layers"][0];
++  const auto& dil = la["dilations"];
++  const auto& act = la["activation"];
++  _layers.resize(dil.size());
++  for (size_t i = 0; i < _layers.size(); i++)
++  {
++    Layer& L = _layers[i];
++    L.K = la.contains("kernel_sizes") ? la["kernel_sizes"][i].get<int>() : la["kernel_size"].get<int>();
++    L.D = dil[i].get<int>();
++    const auto& a = act.is_array() ? act[i] : act;
++    L.slope = a.is_object() ? a.value("negative_slope", 0.01f) : 0.01f;
++  }
++  _head_k = la["head"].value("kernel_size", 1);
++}
++
++template <int C>
++void ExperimentalFastModel<C>::_load_weights(const std::vector<float>& weights)
++{
++  WeightReader reader(weights);
++  reader.read(_rechannel.data(), C); // rechannel 1 -> C, no bias
++  for (auto& L : _layers)
++  {
++    load_layer<C>(L, reader);
++  }
++  _head_w.assign(static_cast<size_t>(_head_k) * C, 0.0f);
++  reader.read_tap_major(_head_w.data(), C, _head_k); // head: out 1, for in channel, for tap
++  _head_b = reader.next();
++  _head_scale = reader.next(); // trailing value, as WaveNet::set_weights_ reads it
++  if (reader.remaining() != 0)
++  {
++    std::stringstream ss;
++    ss << "ExperimentalFastModel: " << reader.remaining() << " trailing weights";
++    throw std::runtime_error(ss.str());
++  }
++}
++
++template <int C>
++void ExperimentalFastModel<C>::SetMaxBufferSize(int max_frames)
++{
++  DSP::SetMaxBufferSize(max_frames);
++  _mbs = max_frames;
++  _in.assign(static_cast<size_t>(C) * _mbs, 0.0f);
++  _hsum.assign(static_cast<size_t>(C) * _mbs, 0.0f);
++  _cond.assign(_mbs, 0.0f);
++  _t.assign(_mbs, 0.0f);
++  _y.assign(_mbs, 0.0f);
++  for (auto& L : _layers)
++  {
++    ring_reset<C>(L.ring, (L.K - 1) * L.D, _mbs);
++  }
++  ring_reset<C>(_head_ring, _head_k - 1, _mbs);
++}
++
++template <int C>
++void ExperimentalFastModel<C>::process(NAM_SAMPLE** input, NAM_SAMPLE** output, int num_frames)
++{
++  if (_mbs == 0)
++  {
++    SetMaxBufferSize(num_frames); // never Reset: nothing to preserve
++  }
++  for (int off = 0; off < num_frames; off += _mbs) // oversized calls: chunk, keep state
++  {
++    _process_block(input[0] + off, output[0] + off, std::min(_mbs, num_frames - off));
++  }
++}
++
++template <int C>
++void ExperimentalFastModel<C>::_process_block(const NAM_SAMPLE* x, NAM_SAMPLE* out, int n)
++{
++  _prepare_input(x, n);
++  for (size_t li = 0; li < _layers.size(); li++)
++  {
++    Layer& L = _layers[li];
++    ring_write<C>(L.ring, _in.data(), _mbs, n);
++    _layer_forward(L, n, li + 1 < _layers.size()); // the last layer's residual feeds nothing
++  }
++  _head_forward(out, n);
++}
++
++// The input as float (the conditioning), rechannelled into the first layer's input; the head sum cleared.
++template <int C>
++void ExperimentalFastModel<C>::_prepare_input(const NAM_SAMPLE* x, int n)
++{
++  float* __restrict cond = _cond.data();
++  for (int f = 0; f < n; f++)
++  {
++    cond[f] = static_cast<float>(x[f]);
++  }
++  for (int c = 0; c < C; c++)
++  {
++    float* __restrict in = _in.data() + static_cast<size_t>(c) * _mbs;
++    const float r = _rechannel[c];
++    for (int f = 0; f < n; f++)
++    {
++      in[f] = r * cond[f];
++    }
++    std::fill_n(_hsum.data() + static_cast<size_t>(c) * _mbs, n, 0.0f);
++  }
++}
++
++// The main tile, then a cascade of smaller ones, so a host block that is not a
++// multiple of kTile (32 frames with a 64 tile, 61 frames, ...) never falls
++// through to one frame at a time.
++template <int C>
++void ExperimentalFastModel<C>::_layer_forward(const Layer& L, int n, bool do_residual)
++{
++  int f = 0;
++  for (; f + kTile <= n; f += kTile)
++  {
++    _layer_tile<kTile>(L, f, n, do_residual);
++  }
++  if constexpr (kTile > 16)
++  {
++    for (; f + 16 <= n; f += 16)
++    {
++      _layer_tile<16>(L, f, n, do_residual);
++    }
++  }
++  if constexpr (kTile > 8)
++  {
++    for (; f + 8 <= n; f += 8)
++    {
++      _layer_tile<8>(L, f, n, do_residual);
++    }
++  }
++  if constexpr (kTile > 4)
++  {
++    for (; f + 4 <= n; f += 4)
++    {
++      _layer_tile<4>(L, f, n, do_residual);
++    }
++  }
++  for (; f < n; f++)
++  {
++    _layer_tile<1>(L, f, n, do_residual);
++  }
++}
++
++// Head: K-tap conv, channels -> 1, over the activation sum. Per tap, a C-term dot
++// product first, then accumulate across taps: the generic path's grouping (a 1xC
++// product per tap). One 16*C-long chain instead measurably adds rounding error.
++template <int C>
++void ExperimentalFastModel<C>::_head_forward(NAM_SAMPLE* out, int n)
++{
++  ring_write<C>(_head_ring, _hsum.data(), _mbs, n);
++  const int hbase = _head_ring.wp - n;
++  float* __restrict y = _y.data();
++  float* __restrict t = _t.data();
++  std::fill_n(y, n, 0.0f);
++  for (int k = 0; k < _head_k; k++)
++  {
++    const float* __restrict s0 = _head_ring.data.data() + hbase - (_head_k - 1 - k);
++    const float w0 = _head_w[static_cast<size_t>(k) * C];
++    for (int f = 0; f < n; f++)
++    {
++      t[f] = w0 * s0[f];
++    }
++    for (int c = 1; c < C; c++)
++    {
++      const float wk = _head_w[static_cast<size_t>(k) * C + c];
++      const float* __restrict s =
++        _head_ring.data.data() + static_cast<size_t>(c) * _head_ring.cap + hbase - (_head_k - 1 - k);
++      for (int f = 0; f < n; f++)
++      {
++        t[f] += wk * s[f];
++      }
++    }
++    for (int f = 0; f < n; f++)
++    {
++      y[f] += t[f];
++    }
++  }
++  for (int f = 0; f < n; f++)
++  {
++    out[f] = static_cast<NAM_SAMPLE>((y[f] + _head_b) * _head_scale);
++  }
++}
++
++struct ExperimentalFastConfig : public ModelConfig
++{
++  nlohmann::json config;
++  int channels = 0;
++  std::unique_ptr<DSP> create(std::vector<float> weights, double sampleRate) override
++  {
++    switch (channels)
++    {
++      case 4: return std::make_unique<ExperimentalFastModel<4>>(config, std::move(weights), sampleRate);
++      case 8: return std::make_unique<ExperimentalFastModel<8>>(config, std::move(weights), sampleRate);
++      case 12: return std::make_unique<ExperimentalFastModel<12>>(config, std::move(weights), sampleRate);
++      case 16: return std::make_unique<ExperimentalFastModel<16>>(config, std::move(weights), sampleRate);
++      default: throw std::runtime_error("ExperimentalFastConfig: unsupported channel count " + std::to_string(channels));
++    }
++  }
++};
++
++// Detector helpers. Each checks one part of the shape, in the order is_experimental_shape
++// has always checked them, so a config that makes one of them throw still does
++// so at the same point.
++
++bool absent(const nlohmann::json& j, const char* key)
++{
++  auto it = j.find(key);
++  return it == j.end() || it->is_null();
++}
++
++bool inactive(const nlohmann::json& la, const char* key)
++{
++  auto it = la.find(key);
++  if (it == la.end() || it->is_null())
++  {
++    return true;
++  }
++  if (it->is_boolean())
++  {
++    return !it->get<bool>();
++  }
++  if (it->is_object())
++  {
++    return !it->value("active", false);
++  }
++  return false;
++}
++
++bool is_leaky_relu(const nlohmann::json& a)
++{
++  return a.is_object() && a.value("type", std::string()) == "LeakyReLU";
++}
++
++bool is_none_string(const nlohmann::json& g)
++{
++  return g.is_string() && g.get<std::string>() == "none";
++}
++
++bool is_null(const nlohmann::json& j)
++{
++  return j.is_null();
++}
++
++bool is_kernel_size(const nlohmann::json& k)
++{
++  return k.is_number_integer() && k.get<int>() >= 1 && k.get<int>() <= 64;
++}
++
++bool is_dilation(const nlohmann::json& d)
++{
++  return d.is_number_integer() && d.get<int>() >= 1;
++}
++
++template <typename Pred>
++bool array_of(const nlohmann::json& j, Pred pred)
++{
++  return j.is_array() && std::all_of(j.begin(), j.end(), pred);
++}
++
++// One layer array, and nothing around it: no post-stack head, no conditioning DSP.
++bool top_level_matches(const nlohmann::json& config)
++{
++  auto layers = config.find("layers");
++  if (layers == config.end() || !layers->is_array() || layers->size() != 1)
++  {
++    return false;
++  }
++  auto head_scale = config.find("head_scale");
++  return absent(config, "head") && absent(config, "condition_dsp") && head_scale != config.end()
++         && head_scale->is_number() && config.value("in_channels", 1) == 1;
++}
++
++// A single input into a depthwise stack (groups_input == channels, dense mixin) of a
++// supported width. Returns that width, or 0.
++int depthwise_channels(const nlohmann::json& la)
++{
++  if (la.value("input_size", 0) != 1 || la.value("condition_size", 0) != 1)
++  {
++    return 0;
++  }
++  const int ch = la.value("channels", 0);
++  if (ch != 4 && ch != 8 && ch != 12 && ch != 16)
++  {
++    return 0;
++  }
++  const bool depthwise =
++    la.value("bottleneck", ch) == ch && la.value("groups_input", 1) == ch && la.value("groups_input_mixin", 1) == 1;
++  return depthwise ? ch : 0;
++}
++
++// Dilations, and a kernel size for each layer.
++bool taps_match(const nlohmann::json& la)
++{
++  auto dil = la.find("dilations");
++  if (dil == la.end() || !dil->is_array() || dil->empty())
++  {
++    return false;
++  }
++  if (auto ks = la.find("kernel_sizes"); ks != la.end())
++  {
++    if (!ks->is_array() || ks->size() != dil->size() || !array_of(*ks, is_kernel_size))
++    {
++      return false;
++    }
++  }
++  else if (!la.contains("kernel_size"))
++  {
++    return false;
++  }
++  return array_of(*dil, is_dilation);
++}
++
++// LeakyReLU on every layer, one per layer when given as a list.
++bool activations_match(const nlohmann::json& la, const size_t num_layers)
++{
++  auto act = la.find("activation");
++  if (act == la.end())
++  {
++    return false;
++  }
++  if (act->is_array())
++  {
++    return act->size() == num_layers && array_of(*act, is_leaky_relu);
++  }
++  return is_leaky_relu(*act);
++}
++
++// No gating in either form, and no secondary activation.
++bool ungated(const nlohmann::json& la)
++{
++  auto gated = la.find("gated");
++  const bool legacy_gated = gated != la.end() && gated->is_boolean() && gated->get<bool>();
++  return (absent(la, "gating_mode") || array_of(la["gating_mode"], is_none_string)) && !legacy_gated
++         && (absent(la, "secondary_activation") || array_of(la["secondary_activation"], is_null));
++}
++
++bool layer_matches(const nlohmann::json& la)
++{
++  return taps_match(la) && activations_match(la, la["dilations"].size()) && ungated(la);
++}
++
++// No head 1x1, an active dense layer 1x1, and a biased, undilated head to one output.
++bool mixing_matches(const nlohmann::json& la)
++{
++  auto l1 = la.find("layer1x1");
++  if (!inactive(la, "head1x1") || l1 == la.end() || !l1->is_object() || !l1->value("active", false)
++      || l1->value("groups", 1) != 1)
++  {
++    return false;
++  }
++  auto head = la.find("head");
++  return head != la.end() && head->is_object() && head->value("out_channels", 0) == 1 && head->value("bias", false)
++         && head->value("head_dilation", 1) == 1;
++}
++
++// No FiLM anywhere, and not slimmable.
++bool unconditioned(const nlohmann::json& la)
++{
++  for (const char* key : {"conv_pre_film", "conv_post_film", "input_mixin_pre_film", "input_mixin_post_film",
++                          "activation_pre_film", "activation_post_film", "layer1x1_post_film", "head1x1_post_film"})
++  {
++    if (!inactive(la, key))
++    {
++      return false;
++    }
++  }
++  return absent(la, "slimmable");
++}
++
++} // namespace
++
++bool is_experimental_shape(const nlohmann::json& config, int* channels)
++{
++  if (!top_level_matches(config))
++  {
++    return false;
++  }
++  const auto& la = config["layers"][0];
++  const int ch = depthwise_channels(la);
++  if (ch == 0 || !layer_matches(la) || !mixing_matches(la) || !unconditioned(la))
++  {
++    return false;
++  }
++  if (channels)
++  {
++    *channels = ch;
++  }
++  return true;
++}
++
++std::unique_ptr<ModelConfig> create_experimental_fast_config(const nlohmann::json& config, double sampleRate)
++{
++  (void)sampleRate;
++  int ch = 0;
++  if (!is_experimental_shape(config, &ch))
++  {
++    throw std::runtime_error("create_experimental_fast_config: config does not match the experimental shape");
++  }
++  auto out = std::make_unique<ExperimentalFastConfig>();
++  out->config = config;
++  out->channels = ch;
++  return out;
++}
++
++} // namespace experimental_fast
++} // namespace wavenet
++} // namespace nam
++
++#endif // NAM_ENABLE_A2_FAST
+diff --git a/NAM/wavenet/experimental_fast.h b/NAM/wavenet/experimental_fast.h
+new file mode 100644
+index 0000000..a791c44
+--- /dev/null
++++ b/NAM/wavenet/experimental_fast.h
+@@ -0,0 +1,42 @@
++#pragma once
++// Experimental fast path: a planar kernel for depthwise-separable WaveNets.
++//
++// Experimental: a Squatch Stack research architecture, not an upstream NAM
++// designation. It is A2's layer stack with each dilated convolution made depthwise
++// (groups_input == channels), so the per-layer mixing is done only by the
++// existing layer 1x1. It is expressible in stock NAM configs and loads in stock
++// Core through the generic WaveNet; this path is what makes it fast.
++//
++// Layout is planar (one contiguous plane per channel) and every inner loop runs
++// across frames, the arrangement that suits a per-channel FIR best. Operation
++// order follows the generic path (taps summed from zero, oldest first; then the
++// conv bias; then + mixin; activation; layer 1x1 then its bias; residual add),
++// so results differ from it only where Eigen's own summation order differs
++// (the 1x1), i.e. at float rounding.
++
++#if defined(NAM_ENABLE_A2_FAST)
++
++  #include <memory>
++
++  #include "json.hpp"
++
++  #include "../model_config.h"
++
++namespace nam
++{
++namespace wavenet
++{
++namespace experimental_fast
++{
++
++/// True when `config` is a single-stack depthwise LeakyReLU WaveNet this path
++/// implements exactly (see experimental_fast.cpp for the full list of conditions).
++bool is_experimental_shape(const nlohmann::json& config, int* channels);
++
++std::unique_ptr<ModelConfig> create_experimental_fast_config(const nlohmann::json& config, double sampleRate);
++
++} // namespace experimental_fast
++} // namespace wavenet
++} // namespace nam
++
++#endif
+diff --git a/NAM/wavenet/model.cpp b/NAM/wavenet/model.cpp
+index 2d56cc6..97bae15 100644
+--- a/NAM/wavenet/model.cpp
++++ b/NAM/wavenet/model.cpp
+@@ -14,6 +14,7 @@
+ 
+ #if defined(NAM_ENABLE_A2_FAST)
+   #include "a2_fast.h"
++  #include "experimental_fast.h"
+ #endif
+ 
+ // detail::Head (WaveNet post-stack head) =====================================
+@@ -1309,6 +1310,22 @@ bool config_is_slimmable_wavenet(const nlohmann::json& config)
+   }
+   return false;
+ }
++
++#if defined(NAM_ENABLE_A2_FAST)
++// The config of a hand-optimized model for the shapes that have one (A2, experimental), or nullptr.
++std::unique_ptr<nam::ModelConfig> create_fast_config(const nlohmann::json& config, double sampleRate)
++{
++  if (nam::wavenet::a2_fast::is_a2_shape(config, nullptr))
++  {
++    return nam::wavenet::a2_fast::create_a2_fast_config(config, sampleRate);
++  }
++  if (nam::wavenet::experimental_fast::is_experimental_shape(config, nullptr))
++  {
++    return nam::wavenet::experimental_fast::create_experimental_fast_config(config, sampleRate);
++  }
++  return nullptr;
++}
++#endif
+ } // namespace
+ 
+ // Config parser for ConfigParserRegistry
+@@ -1318,8 +1335,10 @@ std::unique_ptr<nam::ModelConfig> nam::wavenet::create_config(const nlohmann::js
+     return nam::slimmable_wavenet::create_config(config, sampleRate);
+ 
+ #if defined(NAM_ENABLE_A2_FAST)
+-  if (int a2_channels = 0; nam::wavenet::a2_fast::is_a2_shape(config, &a2_channels))
+-    return nam::wavenet::a2_fast::create_a2_fast_config(config, sampleRate);
++  if (auto fast_config = create_fast_config(config, sampleRate))
++  {
++    return fast_config;
++  }
+ #endif
+ 
+   auto wc = std::make_unique<WaveNetConfig>();
+diff --git a/tools/run_tests.cpp b/tools/run_tests.cpp
+index ee82781..19d253b 100644
+--- a/tools/run_tests.cpp
++++ b/tools/run_tests.cpp
+@@ -40,6 +40,7 @@
+ #include "test/test_render_slim.cpp"
+ #include "test/test_slimmable_wavenet.cpp"
+ #include "test/test_a2_fast.cpp"
++#include "test/test_experimental_fast.cpp"
+ 
+ int main()
+ {
+@@ -411,6 +412,14 @@ int main()
+   test_a2_fast::test_cached_prewarm_full();
+   test_a2_fast::test_process_realtime_safe_lite();
+   test_a2_fast::test_process_realtime_safe_full();
++
++  // experimental fast path (depthwise-separable WaveNets)
++  test_experimental_fast::test_detector_accepts_supported_channels();
++  test_experimental_fast::test_detector_rejects_other_shapes();
++  test_experimental_fast::test_matches_generic();
++  test_experimental_fast::test_create_config_uses_fast_path();
++  test_experimental_fast::test_prewarm_matches_generic();
++  test_experimental_fast::test_oversized_call_matches_consecutive_calls();
+ #endif
+ 
+   std::cout << "Success!" << std::endl;
+diff --git a/tools/test/test_experimental_fast.cpp b/tools/test/test_experimental_fast.cpp
+new file mode 100644
+index 0000000..53a7414
+--- /dev/null
++++ b/tools/test/test_experimental_fast.cpp
+@@ -0,0 +1,206 @@
++// Tests for the experimental fast path: for a config that matches the experimental shape (A2's layer
++// stack with depthwise dilated convolutions), the fast path must produce the
++// generic WaveNet's output on the same input and weights, keep its state across
++// calls larger than the maximum buffer size, and not allocate while processing.
++//
++// Built only when NAM_ENABLE_A2_FAST is defined at compile time.
++
++#if defined(NAM_ENABLE_A2_FAST)
++
++  #include <algorithm>
++  #include <cassert>
++  #include <cmath>
++  #include <memory>
++  #include <string>
++  #include <vector>
++
++  #include "json.hpp"
++
++  #include "NAM/dsp.h"
++  #include "NAM/wavenet/experimental_fast.h"
++  #include "NAM/wavenet/model.h"
++
++  #include "allocation_tracking.h"
++
++namespace test_experimental_fast
++{
++namespace
++{
++
++constexpr double kSampleRate = 48000.0;
++const std::vector<int> kKernelSizes = {6, 6, 15, 3};
++const std::vector<int> kDilations = {1, 7, 2, 30};
++constexpr int kHeadKernelSize = 16;
++
++nlohmann::json build_experimental_config(const int channels)
++{
++  const nlohmann::json leaky = {{"type", "LeakyReLU"}, {"negative_slope", 0.01}};
++  const nlohmann::json film_inactive = {{"active", false}, {"shift", true}, {"groups", 1}};
++  nlohmann::json layer = {{"input_size", 1},
++                          {"condition_size", 1},
++                          {"channels", channels},
++                          {"bottleneck", channels},
++                          {"kernel_sizes", kKernelSizes},
++                          {"dilations", kDilations},
++                          {"activation", std::vector<nlohmann::json>(kDilations.size(), leaky)},
++                          {"gating_mode", std::vector<std::string>(kDilations.size(), "none")},
++                          {"secondary_activation", std::vector<nlohmann::json>(kDilations.size(), nullptr)},
++                          {"head", {{"out_channels", 1}, {"kernel_size", kHeadKernelSize}, {"bias", true}}},
++                          {"head1x1", {{"active", false}, {"out_channels", 1}, {"groups", 1}}},
++                          {"layer1x1", {{"active", true}, {"groups", 1}}},
++                          {"groups_input", channels},
++                          {"groups_input_mixin", 1}};
++  for (const char* film : {"conv_pre_film", "conv_post_film", "input_mixin_pre_film", "input_mixin_post_film",
++                           "activation_pre_film", "activation_post_film", "layer1x1_post_film", "head1x1_post_film"})
++  {
++    layer[film] = film_inactive;
++  }
++  return {{"layers", nlohmann::json::array({layer})}, {"head_scale", 0.02}};
++}
++
++std::vector<float> make_weights(const int channels)
++{
++  int count = channels; // rechannel
++  for (const int k : kKernelSizes)
++  {
++    count += channels * k + channels; // depthwise conv + bias
++    count += channels; // input mixin
++    count += channels * channels + channels; // layer 1x1 + bias
++  }
++  count += channels * kHeadKernelSize + 1 + 1; // head + bias, head scale
++  std::vector<float> weights(count);
++  for (int i = 0; i < count; i++)
++  {
++    weights[i] = 0.3f * std::sin(0.61f * static_cast<float>(i) + static_cast<float>(channels));
++  }
++  return weights;
++}
++
++std::unique_ptr<nam::DSP> make_fast(const int channels)
++{
++  return nam::wavenet::experimental_fast::create_experimental_fast_config(build_experimental_config(channels), kSampleRate)
++    ->create(make_weights(channels), kSampleRate);
++}
++
++std::unique_ptr<nam::DSP> make_generic(const int channels)
++{
++  return nam::wavenet::parse_config_json(build_experimental_config(channels), kSampleRate)
++    .create(make_weights(channels), kSampleRate);
++}
++
++std::vector<NAM_SAMPLE> make_input(const int num_frames)
++{
++  std::vector<NAM_SAMPLE> input(num_frames);
++  for (int i = 0; i < num_frames; i++)
++  {
++    input[i] = static_cast<NAM_SAMPLE>(0.5 * std::sin(0.013 * i) * std::sin(0.29 * i));
++  }
++  return input;
++}
++
++// Process all of `input` in calls of `block` frames. No call may allocate.
++std::vector<NAM_SAMPLE> render(nam::DSP& dsp, std::vector<NAM_SAMPLE> input, const int block)
++{
++  std::vector<NAM_SAMPLE> output(input.size());
++  for (size_t start = 0; start < input.size(); start += block)
++  {
++    NAM_SAMPLE* in = input.data() + start;
++    NAM_SAMPLE* out = output.data() + start;
++    const int n = static_cast<int>(std::min<size_t>(block, input.size() - start));
++    allocation_tracking::run_allocation_test_no_allocations(
++      nullptr, [&]() { dsp.process(&in, &out, n); }, nullptr, "experimental fast path process()");
++  }
++  return output;
++}
++
++bool rejects(void (*change)(nlohmann::json& layer))
++{
++  nlohmann::json config = build_experimental_config(8);
++  change(config["layers"][0]);
++  return !nam::wavenet::experimental_fast::is_experimental_shape(config, nullptr);
++}
++
++} // namespace
++
++void test_detector_accepts_supported_channels()
++{
++  for (const int channels : {4, 8, 12, 16})
++  {
++    int detected = 0;
++    assert(nam::wavenet::experimental_fast::is_experimental_shape(build_experimental_config(channels), &detected));
++    assert(detected == channels);
++  }
++}
++
++void test_detector_rejects_other_shapes()
++{
++  assert(rejects([](nlohmann::json& la) { la["groups_input"] = 1; })); // dense conv: the A2 shape
++  assert(rejects([](nlohmann::json& la) {
++    la["channels"] = 6;
++    la["bottleneck"] = 6;
++    la["groups_input"] = 6;
++  }));
++  assert(rejects([](nlohmann::json& la) { la["gating_mode"][0] = "gated"; }));
++  assert(rejects([](nlohmann::json& la) { la["head1x1"]["active"] = true; }));
++  assert(rejects([](nlohmann::json& la) { la["conv_pre_film"]["active"] = true; }));
++  assert(rejects([](nlohmann::json& la) { la["kernel_sizes"].push_back(3); }));
++  nlohmann::json conditioned = build_experimental_config(8);
++  conditioned["condition_dsp"] = {{"architecture", "Linear"}};
++  assert(!nam::wavenet::experimental_fast::is_experimental_shape(conditioned, nullptr));
++}
++
++void test_matches_generic()
++{
++  const auto input = make_input(4096);
++  for (const int channels : {4, 8, 12, 16})
++  {
++    for (const int block : {1, 7, 32, 61, 64})
++    {
++      auto fast = make_fast(channels);
++      auto generic = make_generic(channels);
++      fast->Reset(kSampleRate, block);
++      generic->Reset(kSampleRate, block);
++      const auto expected = render(*generic, input, block);
++      const auto actual = render(*fast, input, block);
++      for (size_t i = 0; i < input.size(); i++)
++      {
++        assert(std::fabs(actual[i] - expected[i]) < 1.0e-5);
++      }
++    }
++  }
++}
++
++// wavenet::create_config gives an experimental-shaped config the fast path, not the generic WaveNet.
++void test_create_config_uses_fast_path()
++{
++  auto dsp = nam::wavenet::create_config(build_experimental_config(8), kSampleRate)->create(make_weights(8), kSampleRate);
++  assert(dynamic_cast<nam::wavenet::WaveNet*>(dsp.get()) == nullptr);
++}
++
++void test_prewarm_matches_generic()
++{
++  assert(make_fast(8)->GetPrewarmSamples() == make_generic(8)->GetPrewarmSamples());
++}
++
++// A call with more frames than the maximum buffer size matches calls of at most that size.
++void test_oversized_call_matches_consecutive_calls()
++{
++  const int max_buffer = 32;
++  const int call_size = 100; // Not a multiple of max_buffer, so each call's last chunk is short
++  const auto input = make_input(20 * call_size);
++  auto oversized = make_fast(8);
++  auto consecutive = make_fast(8);
++  oversized->Reset(kSampleRate, max_buffer);
++  consecutive->Reset(kSampleRate, max_buffer);
++  std::vector<NAM_SAMPLE> expected;
++  for (size_t start = 0; start < input.size(); start += call_size)
++  {
++    const auto call = render(*consecutive, {input.begin() + start, input.begin() + start + call_size}, max_buffer);
++    expected.insert(expected.end(), call.begin(), call.end());
++  }
++  assert(render(*oversized, input, call_size) == expected);
++}
++
++} // namespace test_experimental_fast
++
++#endif // NAM_ENABLE_A2_FAST

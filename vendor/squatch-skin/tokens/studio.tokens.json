@@ -1,0 +1,993 @@
+{
+  "$description": "Studio: a clean, minimal alternative that proves the contract. Neutral greys, one blue hand, vermillion for the limit (Okabe-Ito hues, darkened for contrast), no brush, no grain.",
+  "$extensions": {
+    "cc.squatch.theme": {
+      "id": "studio",
+      "name": "Studio",
+      "version": "0.1.0",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "defaultMode": "light",
+      "status": "example"
+    }
+  },
+  "primitive": {
+    "color": {
+      "$type": "color",
+      "grey": {
+        "0": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "hex": "#FFFFFF"
+          }
+        },
+        "50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9647,
+              0.9686,
+              0.9725
+            ],
+            "hex": "#F6F7F8"
+          }
+        },
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9333,
+              0.9412,
+              0.949
+            ],
+            "hex": "#EEF0F2"
+          }
+        },
+        "150": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.902,
+              0.9137,
+              0.9294
+            ],
+            "hex": "#E6E9ED"
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8863,
+              0.898,
+              0.9137
+            ],
+            "hex": "#E2E5E9"
+          }
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7882,
+              0.8078,
+              0.8314
+            ],
+            "hex": "#C9CED4"
+          }
+        },
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6039,
+              0.6392,
+              0.6784
+            ],
+            "hex": "#9AA3AD"
+          }
+        },
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3529,
+              0.3804,
+              0.4196
+            ],
+            "hex": "#5A616B"
+          }
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2275,
+              0.2549,
+              0.2902
+            ],
+            "hex": "#3A414A"
+          }
+        },
+        "700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1647,
+              0.1843,
+              0.2118
+            ],
+            "hex": "#2A2F36"
+          }
+        },
+        "800": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1137,
+              0.1294,
+              0.149
+            ],
+            "hex": "#1D2126"
+          }
+        },
+        "850": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0941,
+              0.1059,
+              0.1216
+            ],
+            "hex": "#181B1F"
+          }
+        },
+        "900": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0706,
+              0.0784,
+              0.0902
+            ],
+            "hex": "#121417"
+          }
+        },
+        "950": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0471,
+              0.051,
+              0.0588
+            ],
+            "hex": "#0C0D0F"
+          }
+        }
+      },
+      "blue": {
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5608,
+              0.702,
+              1
+            ],
+            "hex": "#8FB3FF"
+          }
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1843,
+              0.3725,
+              0.8157
+            ],
+            "hex": "#2F5FD0"
+          }
+        }
+      },
+      "vermillion": {
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0.5412,
+              0.3608
+            ],
+            "hex": "#FF8A5C"
+          }
+        },
+        "700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.702,
+              0.2471,
+              0
+            ],
+            "hex": "#B33F00"
+          }
+        }
+      },
+      "black": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000"
+        },
+        "$description": "Pixels off; an unlit LED."
+      }
+    }
+  },
+  "semantic": {
+    "color": {
+      "$type": "color",
+      "surface": {
+        "canvas": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.100}",
+          "$description": "Behind everything: the canvas the devices sit on.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.950}"
+            },
+            "cc.squatch.legacy": [
+              "--canvas",
+              "--bg"
+            ]
+          }
+        },
+        "page": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.50}",
+          "$description": "Page and device fill.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.900}"
+            },
+            "cc.squatch.legacy": [
+              "--paper",
+              "--panel"
+            ]
+          }
+        },
+        "raised": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.0}",
+          "$description": "Cards, knob caps, anything that sits proud.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.850}"
+            },
+            "cc.squatch.legacy": [
+              "--paper-hi"
+            ]
+          }
+        },
+        "sunken": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.150}",
+          "$description": "Control panels, wells, the amp panel.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.800}"
+            },
+            "cc.squatch.legacy": [
+              "--paper-2",
+              "--panel-2"
+            ]
+          }
+        }
+      },
+      "text": {
+        "primary": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.900}",
+          "$description": "Body text; the pen and the brush.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.100}"
+            },
+            "cc.squatch.legacy": [
+              "--ink"
+            ]
+          }
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.500}",
+          "$description": "Legends, labels, hatch, secondary text.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.400}"
+            },
+            "cc.squatch.legacy": [
+              "--ink-soft",
+              "--ink-dim"
+            ]
+          }
+        },
+        "on-accent": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.0}",
+          "$description": "Text on an accent fill.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.950}"
+            },
+            "cc.squatch.legacy": [
+              "--accent-ink"
+            ]
+          }
+        }
+      },
+      "line": {
+        "rule": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.200}",
+          "$description": "Hairlines and dividers.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.700}"
+            },
+            "cc.squatch.legacy": [
+              "--rule",
+              "--line"
+            ]
+          }
+        },
+        "faint": {
+          "$type": "color",
+          "$value": "{primitive.color.grey.300}",
+          "$description": "Tracks, ticks, disabled outlines.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.grey.600}"
+            },
+            "cc.squatch.legacy": [
+              "--ink-faint"
+            ]
+          }
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{primitive.color.blue.600}",
+        "$description": "Your hand: selection, the value being adjusted, focus.",
+        "$extensions": {
+          "cc.squatch.modes": {
+            "dark": "{primitive.color.blue.300}"
+          },
+          "cc.squatch.legacy": [
+            "--accent",
+            "--focus"
+          ]
+        }
+      },
+      "status": {
+        "level": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}",
+          "$description": "Signal level. Level is ink, not green."
+        },
+        "limit": {
+          "$type": "color",
+          "$value": "{primitive.color.vermillion.700}",
+          "$description": "The limit: gain reduction, clipping, errors.",
+          "$extensions": {
+            "cc.squatch.modes": {
+              "dark": "{primitive.color.vermillion.400}"
+            },
+            "cc.squatch.legacy": [
+              "--seal",
+              "--danger"
+            ]
+          }
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{semantic.color.accent}",
+        "$description": "Focus ring (2 px, 2 px offset)."
+      }
+    },
+    "font": {
+      "ui": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "ui-sans-serif",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "$description": "UI and device legends."
+      },
+      "hand": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "ui-sans-serif",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "$description": "The hand's voice: preset, model and capture names."
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "ui-monospace",
+          "SF Mono",
+          "Menlo",
+          "Consolas",
+          "monospace"
+        ],
+        "$description": "Every number, with tabular figures."
+      }
+    },
+    "type": {
+      "$type": "typography",
+      "legend": {
+        "$value": {
+          "fontFamily": "{semantic.font.ui}",
+          "fontSize": {
+            "value": 10,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 1.2,
+            "unit": "px"
+          },
+          "lineHeight": 1
+        },
+        "$description": "Device legends: uppercase, tracked +0.12 em (1.2 px at 10 px; DTCG dimensions have no em unit).",
+        "$extensions": {
+          "cc.squatch.type": {
+            "textTransform": "uppercase"
+          }
+        }
+      },
+      "name": {
+        "$value": {
+          "fontFamily": "{semantic.font.hand}",
+          "fontSize": {
+            "value": 20,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.15
+        },
+        "$extensions": {
+          "cc.squatch.type": {
+            "fontStyle": "normal"
+          }
+        }
+      },
+      "readout": {
+        "$value": {
+          "fontFamily": "{semantic.font.mono}",
+          "fontSize": {
+            "value": 12,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        },
+        "$extensions": {
+          "cc.squatch.type": {
+            "fontVariantNumeric": "tabular-nums"
+          }
+        }
+      },
+      "body": {
+        "$value": {
+          "fontFamily": "{semantic.font.ui}",
+          "fontSize": {
+            "value": 14,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        }
+      }
+    },
+    "space": {
+      "1": {
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      },
+      "2": {
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      },
+      "3": {
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        }
+      },
+      "4": {
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      },
+      "5": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "6": {
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      },
+      "7": {
+        "$value": {
+          "value": 48,
+          "unit": "px"
+        }
+      },
+      "$type": "dimension"
+    },
+    "radius": {
+      "$type": "dimension",
+      "sm": {
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      },
+      "md": {
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        }
+      },
+      "control": {
+        "$value": {
+          "value": 10,
+          "unit": "px"
+        }
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "target": {
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "Minimum hit target (WCAG 2.5.5 AAA / Apple HIG)."
+      },
+      "control": {
+        "$value": {
+          "value": 30,
+          "unit": "px"
+        }
+      }
+    },
+    "stroke": {
+      "$type": "dimension",
+      "contour": {
+        "$value": {
+          "value": 1.5,
+          "unit": "px"
+        },
+        "$description": "Pen: silhouettes, knob caps, pointers (device units)."
+      },
+      "detail": {
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        },
+        "$description": "Pen: lids, panels, nuts."
+      },
+      "hatch": {
+        "$value": {
+          "value": 0.75,
+          "unit": "px"
+        },
+        "$description": "Pen: hatch, ticks, axes."
+      },
+      "focus": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      }
+    },
+    "motion": {
+      "duration": {
+        "$type": "duration",
+        "fast": {
+          "$value": {
+            "value": 140,
+            "unit": "ms"
+          }
+        },
+        "med": {
+          "$value": {
+            "value": 240,
+            "unit": "ms"
+          }
+        },
+        "settle": {
+          "$value": {
+            "value": 240,
+            "unit": "ms"
+          },
+          "$description": "The one expressive transition: a glyph unfurls when a block is added. Played once, never looped."
+        }
+      },
+      "easing": {
+        "standard": {
+          "$type": "cubicBezier",
+          "$value": [
+            0.2,
+            0.7,
+            0.2,
+            1
+          ]
+        }
+      },
+      "ballistics": {
+        "$type": "duration",
+        "$description": "How audio features drive marks. The eye needs a longer release than the ear.",
+        "level-attack": {
+          "$value": {
+            "value": 15,
+            "unit": "ms"
+          }
+        },
+        "level-release": {
+          "$value": {
+            "value": 280,
+            "unit": "ms"
+          }
+        },
+        "env-attack": {
+          "$value": {
+            "value": 5,
+            "unit": "ms"
+          }
+        },
+        "env-release": {
+          "$value": {
+            "value": 120,
+            "unit": "ms"
+          }
+        },
+        "gr-attack": {
+          "$value": {
+            "value": 10,
+            "unit": "ms"
+          }
+        },
+        "gr-release": {
+          "$value": {
+            "value": 150,
+            "unit": "ms"
+          }
+        },
+        "clip-hold": {
+          "$value": {
+            "value": 450,
+            "unit": "ms"
+          }
+        },
+        "readout": {
+          "$value": {
+            "value": 100,
+            "unit": "ms"
+          },
+          "$description": "Readouts update at 10 Hz."
+        },
+        "reduced-step": {
+          "$value": {
+            "value": 250,
+            "unit": "ms"
+          },
+          "$description": "Reduced motion: quantised 4 Hz steps, no easing."
+        }
+      }
+    },
+    "elevation": {
+      "$type": "shadow",
+      "raised": {
+        "$value": {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.14,
+            "hex": "#000000"
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 6,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 18,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -6,
+            "unit": "px"
+          }
+        }
+      }
+    },
+    "ink": {
+      "$description": "Brand-specific ink parameters. DTCG has no brush type, so each is a plain number; the group is marked as one composite for our build.",
+      "$extensions": {
+        "cc.squatch.ink": {
+          "composite": "brush"
+        }
+      },
+      "brush": {
+        "$type": "number",
+        "entry": {
+          "$value": 0,
+          "$description": "Press-in length, 0..1 of the stroke."
+        },
+        "exit": {
+          "$value": 0,
+          "$description": "Lift-off length, 0..1."
+        },
+        "belly": {
+          "$value": 0,
+          "$description": "Mid-stroke swell."
+        },
+        "dry": {
+          "$value": 0,
+          "$description": "0 wet .. 1 very dry: how far dry streaks reach."
+        },
+        "streaks": {
+          "$value": 0,
+          "$description": "Dry-brush cuts per stroke (5-9 in the ink look)."
+        },
+        "jitter": {
+          "$value": 0,
+          "$description": "Per-sample width jitter; seeded, never re-randomised per frame."
+        },
+        "bleed": {
+          "$value": 0,
+          "$description": "Halo opacity, ink wicking into paper."
+        }
+      },
+      "grain": {
+        "$type": "number",
+        "opacity": {
+          "$type": "number",
+          "$value": 0,
+          "$description": "Paper-grain overlay opacity.",
+          "$extensions": {
+            "cc.squatch.ink": {
+              "blend": {
+                "light": "multiply",
+                "dark": "screen"
+              },
+              "tile": 256
+            }
+          }
+        },
+        "frequency": {
+          "$value": 0.045,
+          "$description": "feTurbulence baseFrequency of the grain tile."
+        }
+      },
+      "edge": {
+        "$type": "number",
+        "roughness": {
+          "$value": 0,
+          "$description": "feDisplacementMap scale for brushed lettering (0 = crisp)."
+        }
+      },
+      "seal": {
+        "$type": "number",
+        "roughness": {
+          "$value": 0,
+          "$description": "Edge displacement of the seal (hanko) mark.",
+          "$extensions": {
+            "cc.squatch.ink": {
+              "shape": "dot"
+            }
+          }
+        }
+      }
+    }
+  },
+  "component": {
+    "pedal": {
+      "$type": "color",
+      "face": {
+        "$value": "{semantic.color.surface.raised}"
+      },
+      "edge": {
+        "$value": "{semantic.color.line.faint}"
+      },
+      "lid": {
+        "$value": "{semantic.color.line.rule}"
+      },
+      "corner-radius": {
+        "$type": "dimension",
+        "$value": "{semantic.radius.md}"
+      }
+    },
+    "knob": {
+      "$type": "color",
+      "cap": {
+        "$value": "{semantic.color.surface.raised}"
+      },
+      "outline": {
+        "$value": "{semantic.color.text.primary}"
+      },
+      "pointer": {
+        "$value": "{semantic.color.text.primary}"
+      },
+      "track": {
+        "$value": "{semantic.color.line.faint}"
+      },
+      "value": {
+        "$value": "{semantic.color.accent}"
+      },
+      "ring-width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 3,
+          "unit": "px"
+        }
+      },
+      "travel": {
+        "$type": "number",
+        "$value": 270,
+        "$description": "Degrees of rotation, -135 to +135."
+      }
+    },
+    "footswitch": {
+      "$type": "color",
+      "body": {
+        "$value": "{semantic.color.surface.sunken}"
+      },
+      "outline": {
+        "$value": "{semantic.color.text.primary}"
+      }
+    },
+    "led": {
+      "$type": "color",
+      "on": {
+        "$value": "{semantic.color.accent}"
+      },
+      "off": {
+        "$value": "{semantic.color.line.faint}"
+      },
+      "clip": {
+        "$value": "{semantic.color.status.limit}"
+      }
+    },
+    "legend": {
+      "$type": "color",
+      "color": {
+        "$value": "{semantic.color.text.secondary}"
+      },
+      "type": {
+        "$type": "typography",
+        "$value": "{semantic.type.legend}",
+        "$description": "Knob and switch legends. A skin may swap the face, e.g. to the hand."
+      }
+    },
+    "glyph": {
+      "$type": "color",
+      "ink": {
+        "$value": "{semantic.color.text.primary}"
+      },
+      "value": {
+        "$value": "{semantic.color.accent}"
+      }
+    },
+    "meter": {
+      "$type": "color",
+      "level": {
+        "$value": "{semantic.color.status.level}"
+      },
+      "limit": {
+        "$value": "{semantic.color.status.limit}"
+      }
+    }
+  },
+  "hardware": {
+    "$description": "Emissive surfaces on the pedal itself: small displays and indicator LEDs. Mode-less: a lit display on a dark stage is always dark, so every value aliases a primitive directly and none has a per-mode value. Not emitted to CSS and not overridable by skins. Built to dist/c/*_hardware.h, dist/json/*.hardware.json, and the C++ and Swift token files.",
+    "display": {
+      "$type": "color",
+      "$description": "A colour display (RGB565 TFT or OLED). The reduced palette: six roles, index order fixed (0..5) for palette-indexed drivers.",
+      "background": {
+        "$value": "{primitive.color.black}",
+        "$description": "Pixels off. True black: an OLED draws no current, and a TFT backlight bleeds least."
+      },
+      "text": {
+        "$value": "{primitive.color.grey.100}",
+        "$description": "Values, names, menu items."
+      },
+      "secondary": {
+        "$value": "{primitive.color.grey.400}",
+        "$description": "Legends, units, the unselected item."
+      },
+      "accent": {
+        "$value": "{primitive.color.blue.300}",
+        "$description": "Your hand: the selected item, the value being turned, in tune."
+      },
+      "limit": {
+        "$value": "{primitive.color.vermillion.400}",
+        "$description": "The limit only: CLIP, gain reduction, errors. Always with a word or shape as well."
+      },
+      "rule": {
+        "$value": "{primitive.color.grey.500}",
+        "$description": "Tracks and dividers. Decorative: never the only cue."
+      }
+    },
+    "led": {
+      "$type": "color",
+      "$description": "Indicator lamps. For an RGB LED (WS2812, SK6812) the build also emits gamma-decoded PWM duties; for a single-colour LED the value is the design intent for choosing the part (amber for the hand, red for the limit).",
+      "engaged": {
+        "$value": "{primitive.color.blue.300}",
+        "$description": "Effect on; in tune."
+      },
+      "limit": {
+        "$value": "{primitive.color.vermillion.400}",
+        "$description": "Clip, held for motion.ballistics.clip-hold. Placed apart from the engaged lamp, because amber and red lamps are close for red-green colour-blind players."
+      },
+      "off": {
+        "$value": "{primitive.color.black}",
+        "$description": "Unlit."
+      },
+      "max-duty": {
+        "$type": "number",
+        "$value": 0.35,
+        "$description": "Brightness ceiling, 0..1 of full PWM, so a lamp does not glare on a dark stage. A starting point: tune on the enclosure behind its lens."
+      }
+    }
+  }
+}
